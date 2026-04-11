@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f5f7f2;
+  --foreground: #0f1720;
+  --surface: #ffffff;
+  --surface-muted: #e8efe1;
+  --primary: #0f4d3c;
+  --primary-strong: #0b382c;
+  --accent: #d89b37;
+  --accent-soft: #f6e6c8;
+  --border: rgba(15, 77, 60, 0.12);
+  --muted: #5c6f66;
+  --hero-glow: radial-gradient(circle at top, rgba(216, 155, 55, 0.22), transparent 36%),
+    radial-gradient(circle at 80% 20%, rgba(15, 77, 60, 0.18), transparent 30%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    var(--hero-glow),
+    linear-gradient(180deg, #f7faf6 0%, #edf3ea 55%, #f6f7f1 100%);
+  color: var(--foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+.page-shell {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.section-space {
+  padding-block: 4rem;
+}
+
+.glass-card {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(15, 77, 60, 0.12);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 60px rgba(15, 77, 60, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.section-kicker {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(15, 77, 60, 0.7);
+}
+
+.section-title {
+  margin-top: 1rem;
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: rgb(2, 6, 23);
+}
+
+.section-copy {
+  margin-top: 1rem;
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.75rem;
+  color: var(--muted);
+}
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--primary);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  transition: background-color 160ms ease;
+}
+
+.button-primary:hover {
+  background: var(--primary-strong);
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(15, 77, 60, 0.15);
+  background: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary);
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.button-secondary:hover {
+  border-color: rgba(15, 77, 60, 0.3);
+  background: rgba(15, 77, 60, 0.05);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-primary-strong {
+  color: var(--primary-strong);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-primary\/70 {
+  color: rgba(15, 77, 60, 0.7);
+}
+
+.text-primary\/80 {
+  color: rgba(15, 77, 60, 0.8);
+}
+
+.text-white\/60 {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.text-white\/65 {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.text-white\/72 {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.text-white\/78 {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-primary-strong {
+  background-color: var(--primary-strong);
+}
+
+.bg-accent-soft {
+  background-color: var(--accent-soft);
+}
+
+.bg-white\/6 {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.bg-white\/70 {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.bg-white\/80 {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.bg-white\/85 {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.bg-primary\/4 {
+  background-color: rgba(15, 77, 60, 0.04);
+}
+
+.bg-primary\/5 {
+  background-color: rgba(15, 77, 60, 0.05);
+}
+
+.bg-primary\/8 {
+  background-color: rgba(15, 77, 60, 0.08);
+}
+
+.bg-accent\/10 {
+  background-color: rgba(216, 155, 55, 0.1);
+}
+
+.bg-accent\/20 {
+  background-color: rgba(216, 155, 55, 0.2);
+}
+
+.border-primary\/10 {
+  border-color: rgba(15, 77, 60, 0.1);
+}
+
+.border-primary\/15 {
+  border-color: rgba(15, 77, 60, 0.15);
+}
+
+.border-primary\/30 {
+  border-color: rgba(15, 77, 60, 0.3);
+}
+
+.border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.border-white\/40 {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+* {
+  border-color: var(--border);
+}
+
+::selection {
+  background: rgba(216, 155, 55, 0.28);
+}
+
+@media (min-width: 768px) {
+  .page-shell {
+    padding-inline: 2.5rem;
+  }
+
+  .section-space {
+    padding-block: 6rem;
+  }
+
+  .section-title {
+    font-size: 3rem;
+  }
+
+  .section-copy {
+    font-size: 1.125rem;
+  }
+}
