@@ -1,5 +1,7 @@
 "use server";
 
+import nodemailer from "nodemailer";
+
 export type QuoteFormState = {
   status: "idle" | "success" | "error";
   message: string;
@@ -26,24 +28,78 @@ export async function submitQuoteForm(
     return { status: "error", message: "Please enter a valid email address." };
   }
 
-  // -----------------------------------------------------------------------
-  // TODO: Wire up your preferred email / CRM service here, for example:
-  //
-  // Resend (https://resend.com):
-  //   const resend = new Resend(process.env.RESEND_API_KEY);
-  //   await resend.emails.send({
-  //     from: "Green Ellora <noreply@greenellora.com>",
-  //     to: ["hello@greenellora.com"],
-  //     subject: `New quote request from ${name}`,
-  //     html: `<p>${message}</p>`,
-  //   });
-  //
-  // Nodemailer, SendGrid, Postmark, etc. work the same way.
-  // -----------------------------------------------------------------------
+  const smtpHost = process.env.SMTP_HOST;
+  const smtpPort = Number(process.env.SMTP_PORT ?? "587");
+  const smtpSecure = process.env.SMTP_SECURE === "true";
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  const quoteTo = process.env.QUOTE_TO_EMAIL ?? "hello@greenellora.com";
+  const fromEmail = process.env.SMTP_FROM_EMAIL ?? smtpUser;
+  const fromName = process.env.SMTP_FROM_NAME ?? "Green Ellora";
 
-  console.log("[Green Ellora] Quote enquiry received:", {
-    name, company, email, phone, country, products, enquiryType, message,
+  if (!smtpHost || !smtpUser || !smtpPass || !fromEmail) {
+    return {
+      status: "error",
+      message: "Quote service is not configured yet. Please try again in a few minutes.",
+    };
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpSecure,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass,
+    },
   });
+
+  const productList = products.length > 0 ? products.join(", ") : "Not specified";
+  const subject = `New quote request from ${name}`;
+  const text = [
+    "New quote enquiry submitted:",
+    "",
+    `Name: ${name}`,
+    `Company: ${company || "Not provided"}`,
+    `Email: ${email}`,
+    `Phone: ${phone || "Not provided"}`,
+    `Country: ${country || "Not provided"}`,
+    `Enquiry Type: ${enquiryType || "Not provided"}`,
+    `Products: ${productList}`,
+    "",
+    "Message:",
+    message,
+  ].join("\n");
+
+  const html = `
+    <h2>New quote enquiry submitted</h2>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Company:</strong> ${company || "Not provided"}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+    <p><strong>Country:</strong> ${country || "Not provided"}</p>
+    <p><strong>Enquiry Type:</strong> ${enquiryType || "Not provided"}</p>
+    <p><strong>Products:</strong> ${productList}</p>
+    <p><strong>Message:</strong></p>
+    <p>${message.replace(/\n/g, "<br />")}</p>
+  `;
+
+  try {
+    await transporter.sendMail({
+      from: `${fromName} <${fromEmail}>`,
+      to: quoteTo,
+      replyTo: email,
+      subject,
+      text,
+      html,
+    });
+  } catch (error) {
+    console.error("[Green Ellora] Failed to send quote email", error);
+    return {
+      status: "error",
+      message: "Unable to submit enquiry right now. Please try again shortly.",
+    };
+  }
 
   return {
     status: "success",

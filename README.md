@@ -19,8 +19,22 @@ SEO-friendly Next.js marketing website for the Green Ellora export brand.
 ## Getting started
 
 1. Install dependencies with `npm install`
-2. Start development with `npm run dev`
-3. Build for production with `npm run build`
+2. Configure mail settings in `.env.local`:
+
+```env
+SMTP_HOST=smtp.yourprovider.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-smtp-username
+SMTP_PASS=your-smtp-password
+SMTP_FROM_EMAIL=noreply@greenellora.com
+SMTP_FROM_NAME=Green Ellora
+QUOTE_TO_EMAIL=hello@greenellora.com
+```
+
+3. Restart dev server after changing env values
+4. Start development with `npm run dev`
+5. Build for production with `npm run build`
 
 ## Placeholder content to replace
 
