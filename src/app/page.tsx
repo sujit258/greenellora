@@ -1,3 +1,6 @@
+"use client";
+
+import { useRef, useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -8,6 +11,7 @@ import {
   Sparkles,
   Truck,
 } from "lucide-react";
+import Image from "next/image";
 
 import { QuoteForm } from "@/components/quote-form";
 import { SectionHeading } from "@/components/section-heading";
@@ -22,14 +26,104 @@ import {
   trustPillars,
   whyChooseUs,
 } from "@/lib/site";
+import haladi from "@/assets/haladi.jpeg";
+import jaggury from "@/assets/jaggury.jpeg";
+import tea from "@/assets/tea.jpeg";
+
+const bannerImages = [
+  { src: jaggury, alt: "Organic jaggery" },
+  { src: tea, alt: "Organic tea leaves" },
+  { src: haladi, alt: "Haladi turmeric" },
+];
 
 const icons = [ShieldCheck, BadgeCheck, Boxes, Truck];
 
 export default function Home() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const bannerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSlide = (index: number) => {
+    setActiveSlide(index);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    setTouchEnd(e.changedTouches[0].clientX);
+    handleSwipe();
+  };
+
+  const handleSwipe = () => {
+    if (touchStart === 0 || touchEnd === 0) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      const nextIndex = (activeSlide + 1) % bannerImages.length;
+      scrollToSlide(nextIndex);
+    }
+    if (isRightSwipe) {
+      const prevIndex = (activeSlide - 1 + bannerImages.length) % bannerImages.length;
+      scrollToSlide(prevIndex);
+    }
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   return (
     <div className="relative">
       <SiteHeader />
       <main>
+        {/* Banner */}
+        <section className="relative overflow-hidden">
+          <div
+            ref={bannerRef}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="relative h-64 md:h-[28rem] overflow-hidden rounded-[2rem]"
+          >
+            {bannerImages.map((banner, index) => (
+              <div
+                key={banner.alt}
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                  activeSlide === index ? "opacity-100" : "opacity-0 pointer-events-none"
+                }`}
+              >
+                <Image src={banner.src} alt={banner.alt} fill className="object-cover" priority />
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="relative flex h-full items-center justify-center text-center text-white px-6">
+                  <div className="max-w-2xl">
+                    <p className="text-sm uppercase tracking-[0.3em] text-accent">Organic export showcase</p>
+                    <h1 className="mt-4 text-3xl font-bold md:text-5xl">Premium organic ingredients from India</h1>
+                    <p className="mt-4 text-base leading-7 text-white/90 md:text-lg">
+                      Certified quality, traceable sourcing, and export-ready supply for buyers across the globe.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex justify-center gap-3 px-6 md:px-8">
+            {bannerImages.map((banner, index) => (
+              <button
+                key={banner.alt}
+                type="button"
+                onClick={() => scrollToSlide(index)}
+                className={`transition-all duration-300 ${
+                  activeSlide === index ? "h-3 w-10 bg-white ring-2 ring-white/70" : "h-3 w-3 rounded-full bg-white/50 hover:bg-white/70"
+                }`}
+                style={{ borderRadius: "9999px" }}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </section>
+
         <section id="home" className="section-space overflow-hidden">
           <div className="page-shell grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
@@ -276,6 +370,45 @@ export default function Home() {
                   Get a quote
                   <ArrowRight className="h-4 w-4" />
                 </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="location" className="section-space">
+          <div className="page-shell">
+            <div className="glass-card overflow-hidden">
+              <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+                <div className="p-8 md:p-10">
+                  <p className="section-kicker">Our office</p>
+                  <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl">
+                    Visit Green Ellora Pvt. Ltd.
+                  </h2>
+                  <p className="mt-4 max-w-xl text-sm leading-7 text-muted">
+                    Green Ellora Pvt. Ltd. near Ram Mandir, Chandol, taluka Dist. Buldhana — PIN 411057.
+                  </p>
+                  <p className="mt-6 text-sm leading-7 text-slate-800">
+                    Use the button below to open the exact location in Google Maps and start navigation directly from your device.
+                  </p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Green+Ellora+Pvt.+Ltd+near+Ram+Mandir+Chandol+Dist+Buldhana+411057"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-strong"
+                  >
+                    Open in Google Maps
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
+                <div className="h-[22rem] bg-slate-100 md:h-[28rem]">
+                  <iframe
+                    title="Green Ellora location"
+                    src="https://maps.google.com/maps?q=Green+Ellora+Pvt.+Ltd+near+Ram+Mandir+Chandol+Dist+Buldhana+411057&output=embed"
+                    className="h-full w-full border-0"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
               </div>
             </div>
           </div>
