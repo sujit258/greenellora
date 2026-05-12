@@ -48,6 +48,11 @@ export default function Home() {
     setActiveSlide(index);
   };
 
+  const handleNext = () => {
+    const nextIndex = (activeSlide + 1) % bannerImages.length;
+    scrollToSlide(nextIndex);
+  };
+
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
   };
@@ -108,19 +113,29 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="mt-4 flex justify-center gap-3 px-6 md:px-8">
-            {bannerImages.map((banner, index) => (
-              <button
-                key={banner.alt}
-                type="button"
-                onClick={() => scrollToSlide(index)}
-                className={`transition-all duration-300 ${
-                  activeSlide === index ? "h-3 w-10 bg-white ring-2 ring-white/70" : "h-3 w-3 rounded-full bg-white/50 hover:bg-white/70"
-                }`}
-                style={{ borderRadius: "9999px" }}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+          <div className="mt-4 flex items-center justify-between gap-4 px-6 md:px-8">
+            <div className="flex justify-center gap-3 flex-1">
+              {bannerImages.map((banner, index) => (
+                <button
+                  key={banner.alt}
+                  type="button"
+                  onClick={() => scrollToSlide(index)}
+                  className={`transition-all duration-300 ${
+                    activeSlide === index ? "h-3 w-10 bg-white ring-2 ring-white/70" : "h-3 w-3 rounded-full bg-white/50 hover:bg-white/70"
+                  }`}
+                  style={{ borderRadius: "9999px" }}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-primary shadow-lg shadow-slate-900/10 transition hover:bg-white"
+            >
+              Next
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         </section>
 
