@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -26,13 +26,19 @@ import {
   trustPillars,
   whyChooseUs,
 } from "@/lib/site";
+import chana from "@/assets/chana.jpeg";
+import corn from "@/assets/corn.png";
 import haladi from "@/assets/haladi.jpeg";
+import honey from "@/assets/honey.jpeg";
 import jaggury from "@/assets/jaggury.jpeg";
 import tea from "@/assets/tea.jpeg";
 
 const bannerImages = [
+  { src: honey, alt: "Organic honey" },
   { src: jaggury, alt: "Organic jaggery" },
   { src: tea, alt: "Organic tea leaves" },
+  { src: chana, alt: "Organic chickpeas" },
+  { src: corn, alt: "Organic corn kernels" },
   { src: haladi, alt: "Haladi turmeric" },
 ];
 
@@ -52,6 +58,14 @@ export default function Home() {
     const nextIndex = (activeSlide + 1) % bannerImages.length;
     scrollToSlide(nextIndex);
   };
+
+  useEffect(() => {
+    const autoAdvance = setInterval(() => {
+      handleNext();
+    }, 5000);
+
+    return () => clearInterval(autoAdvance);
+  }, [activeSlide]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -90,7 +104,7 @@ export default function Home() {
             ref={bannerRef}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="relative h-64 md:h-[28rem] overflow-hidden rounded-[2rem]"
+            className="relative h-96 md:h-[40rem] overflow-hidden rounded-[2rem] bg-slate-950/5"
           >
             {bannerImages.map((banner, index) => (
               <div
@@ -99,11 +113,10 @@ export default function Home() {
                   activeSlide === index ? "opacity-100" : "opacity-0 pointer-events-none"
                 }`}
               >
-                <Image src={banner.src} alt={banner.alt} fill className="object-cover" priority />
+                <Image src={banner.src} alt={banner.alt} fill className="object-cover object-center" priority />
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="relative flex h-full items-center justify-center text-center text-white px-6">
                   <div className="max-w-2xl">
-                    <p className="text-sm uppercase tracking-[0.3em] text-accent">Organic export showcase</p>
                     <h1 className="mt-4 text-3xl font-bold md:text-5xl">Premium organic ingredients from India</h1>
                     <p className="mt-4 text-base leading-7 text-white/90 md:text-lg">
                       Certified quality, traceable sourcing, and export-ready supply for buyers across the globe.
