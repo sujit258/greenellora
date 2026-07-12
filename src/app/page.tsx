@@ -1,71 +1,105 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  ArrowRight,
-  BadgeCheck,
-  Boxes,
-  Earth,
-  Leaf,
-  ShieldCheck,
-  Sparkles,
-  Truck,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
+import { CertificationsStrip } from "@/components/certifications-strip";
 import { QuoteForm } from "@/components/quote-form";
-import { SectionHeading } from "@/components/section-heading";
+import { ProductSlider } from "@/components/product-slider";
+import { VideoSlider } from "@/components/video-slider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { normalizeVideos, type VideoItem } from "@/lib/video-utils";
 import {
-  highlights,
-  markets,
-  metrics,
+  coreServices,
+  exportProcess,
   productCategories,
   siteConfig,
-  trustPillars,
-  whyChooseUs,
+  testimonials,
+  trustPoints,
 } from "@/lib/site";
 import chana from "@/assets/chana.jpeg";
-import corn from "@/assets/corn.png";
 import haladi from "@/assets/haladi.jpeg";
 import honey from "@/assets/honey.jpeg";
 import jaggury from "@/assets/jaggury.jpeg";
 import tea from "@/assets/tea.jpeg";
 
-const bannerImages = [
-  { src: honey, alt: "Organic honey" },
-  { src: jaggury, alt: "Organic jaggery" },
-  { src: tea, alt: "Organic tea leaves" },
-  { src: chana, alt: "Organic chickpeas" },
-  { src: corn, alt: "Organic corn kernels" },
-  { src: haladi, alt: "Haladi turmeric" },
-];
+const serviceImages = { honey, jaggury, chana };
+const categoryImages = [haladi, honey, chana, tea];
 
-const icons = [ShieldCheck, BadgeCheck, Boxes, Truck];
+const bannerSlides = [
+  {
+    src: honey,
+    alt: "Organic honey",
+    title: "Sourcing India's Best for the Globe",
+    copy: "Premium quality organic spices, superfoods, and agro products — delivered with trust and integrity from India.",
+  },
+  {
+    src: haladi,
+    alt: "Haladi turmeric",
+    title: "Premium Spices from Indian Farms",
+    copy: "Certified organic turmeric, chilli, coriander, and spices processed to international food safety standards.",
+  },
+  {
+    src: tea,
+    alt: "Organic tea leaves",
+    title: "Global Organic Trade Partner",
+    copy: "Reliable supply, full documentation, and dedicated export support for importers across 20+ countries.",
+  },
+  {
+    src: jaggury,
+    alt: "Organic jaggery",
+    title: "Best-in-Class Processing",
+    copy: "Every shipment is lab-tested, traceable, and backed by FSSAI, APEDA, and phytosanitary compliance.",
+  },
+];
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const bannerRef = useRef<HTMLDivElement>(null);
-
-  const scrollToSlide = (index: number) => {
-    setActiveSlide(index);
-  };
+  const [handicraftProducts, setHandicraftProducts] = useState<any[]>([]);
+  const [ayurvedicProducts, setAyurvedicProducts] = useState<any[]>([]);
+  const [videos, setVideos] = useState<VideoItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handleNext = () => {
-    const nextIndex = (activeSlide + 1) % bannerImages.length;
-    scrollToSlide(nextIndex);
+    setActiveSlide((prev) => (prev + 1) % bannerSlides.length);
   };
 
   useEffect(() => {
-    const autoAdvance = setInterval(() => {
-      handleNext();
-    }, 5000);
-
+    const autoAdvance = setInterval(handleNext, 7000);
     return () => clearInterval(autoAdvance);
   }, [activeSlide]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [handicraftRes, ayurvedicRes, videosRes] = await Promise.all([
+          fetch("/api/handicraft-products"),
+          fetch("/api/ayurvedic-products"),
+          fetch("/api/videos"),
+        ]);
+
+        const handicraftData = await handicraftRes.json();
+        const ayurvedicData = await ayurvedicRes.json();
+        const videosData = await videosRes.json();
+
+        if (handicraftData.success) setHandicraftProducts(handicraftData.data);
+        if (ayurvedicData.success) setAyurvedicProducts(ayurvedicData.data);
+        if (videosData.success) setVideos(normalizeVideos(videosData.data));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -73,22 +107,11 @@ export default function Home() {
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     setTouchEnd(e.changedTouches[0].clientX);
-    handleSwipe();
-  };
-
-  const handleSwipe = () => {
     if (touchStart === 0 || touchEnd === 0) return;
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      const nextIndex = (activeSlide + 1) % bannerImages.length;
-      scrollToSlide(nextIndex);
-    }
-    if (isRightSwipe) {
-      const prevIndex = (activeSlide - 1 + bannerImages.length) % bannerImages.length;
-      scrollToSlide(prevIndex);
+    if (distance > 50) handleNext();
+    if (distance < -50) {
+      setActiveSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length);
     }
     setTouchStart(0);
     setTouchEnd(0);
@@ -98,341 +121,226 @@ export default function Home() {
     <div className="relative">
       <SiteHeader />
       <main>
-        {/* Banner */}
-        <section className="relative overflow-hidden">
+        {/* Hero */}
+        <section className="hero-slider">
           <div
             ref={bannerRef}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="relative h-96 md:h-[40rem] overflow-hidden rounded-[2rem] bg-slate-950/5"
+            className="h-full w-full relative"
           >
-            {bannerImages.map((banner, index) => (
+            {bannerSlides.map((slide, index) => (
               <div
-                key={banner.alt}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  activeSlide === index ? "opacity-100" : "opacity-0 pointer-events-none"
+                key={slide.alt}
+                className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                  activeSlide === index ? "opacity-100 scale-100" : "pointer-events-none opacity-0 scale-105"
                 }`}
               >
-                <Image src={banner.src} alt={banner.alt} fill className="object-cover object-center" priority />
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="relative flex h-full items-center justify-center text-center text-white px-6">
-                  <div className="max-w-2xl">
-                    <h1 className="mt-4 text-3xl font-bold md:text-5xl">Premium organic ingredients from India</h1>
-                    <p className="mt-4 text-base leading-7 text-white/90 md:text-lg">
-                      Certified quality, traceable sourcing, and export-ready supply for buyers across the globe.
-                    </p>
-                  </div>
-                </div>
+                <Image src={slide.src} alt={slide.alt} fill className="object-cover" priority={index === 0} />
+                <div className="hero-slide-overlay" />
               </div>
             ))}
-          </div>
-          <div className="mt-4 flex items-center justify-between gap-4 px-6 md:px-8">
-            <div className="flex justify-center gap-3 flex-1">
-              {bannerImages.map((banner, index) => (
+
+            <div className="page-shell hero-content">
+              <h1 className="hero-title">{bannerSlides[activeSlide].title}</h1>
+              <p className="hero-copy">{bannerSlides[activeSlide].copy}</p>
+              <div className="hero-actions">
+                <a href="#contact" className="button-primary">
+                  Enquire Now
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <a href="#products" className="button-hero-outline">
+                  View Products
+                </a>
+              </div>
+            </div>
+
+            <div className="hero-dots">
+              {bannerSlides.map((slide, index) => (
                 <button
-                  key={banner.alt}
+                  key={slide.alt}
                   type="button"
-                  onClick={() => scrollToSlide(index)}
-                  className={`transition-all duration-300 ${
-                    activeSlide === index ? "h-3 w-10 bg-white ring-2 ring-white/70" : "h-3 w-3 rounded-full bg-white/50 hover:bg-white/70"
+                  onClick={() => setActiveSlide(index)}
+                  className={`h-2.5 rounded-full transition-all duration-500 border-none cursor-pointer ${
+                    activeSlide === index ? "bg-white w-8" : "bg-white/40 w-2.5"
                   }`}
-                  style={{ borderRadius: "9999px" }}
                   aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
             </div>
-            <button
-              type="button"
-              onClick={handleNext}
-              className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-primary shadow-lg shadow-slate-900/10 transition hover:bg-white"
-            >
-              Next
-              <ArrowRight className="h-4 w-4" />
-            </button>
           </div>
         </section>
 
-        <section id="home" className="section-space overflow-hidden">
-          <div className="page-shell grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-            <div>
-              <p className="section-kicker">Pure roots. Global reach.</p>
-              <h1 className="mt-5 max-w-3xl text-5xl font-semibold tracking-tight text-slate-950 md:text-7xl">
-                Premium organic & agro exports straight from India.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-muted md:text-xl">
-                {siteConfig.name} sources and exports certified organic spices, superfoods, pulses, and herbal products
-                — delivering authentic Indian quality to buyers and distributors in 20+ countries.
-              </p>
+        <CertificationsStrip />
 
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <a href="#products" className="button-primary gap-2">
-                  Explore products
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-                <a href="#why-us" className="button-secondary">
-                  Discover why buyers choose us
-                </a>
-              </div>
-
-              <div className="mt-10 grid gap-4 sm:grid-cols-2">
-                {highlights.map((item) => (
-                  <div key={item} className="glass-card flex items-start gap-3 px-5 py-4">
-                    <Leaf className="mt-1 h-5 w-5 text-accent" />
-                    <p className="text-sm font-medium text-slate-800">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="glass-card relative overflow-hidden p-8 md:p-10">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(216,155,55,0.18),transparent_32%),linear-gradient(135deg,rgba(15,77,60,0.06),transparent_60%)]" />
-                <div className="relative">
-                  <div className="inline-flex rounded-full border border-primary/10 bg-primary/5 px-4 py-2 text-sm font-medium text-primary">
-                    Certified organic · Export-grade quality
-                  </div>
-                  <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                    {metrics.map((metric) => (
-                      <div key={metric.label} className="rounded-2xl border border-primary/10 bg-white/85 p-5">
-                        <p className="text-3xl font-semibold text-primary md:text-4xl">{metric.value}</p>
-                        <p className="mt-2 text-sm leading-6 text-muted">{metric.label}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-8 rounded-3xl bg-primary p-6 text-white">
-                    <div className="flex items-center gap-3 text-accent">
-                      <Sparkles className="h-5 w-5" />
-                      <p className="text-sm font-semibold uppercase tracking-[0.24em]">Positioning</p>
-                    </div>
-                    <p className="mt-4 text-2xl font-semibold">Nature&apos;s best. Delivered worldwide.</p>
-                    <p className="mt-3 max-w-md text-sm leading-7 text-white/78">
-                      From certified Indian farms to your warehouse — every Green Ellora shipment carries our promise of purity, consistency, and on-time delivery.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="pb-8">
-          <div className="page-shell grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {trustPillars.map((pillar, index) => {
-              const Icon = icons[index];
-              return (
-                <div key={pillar.title} className="glass-card px-6 py-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/8 text-primary">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <h2 className="mt-5 text-xl font-semibold text-slate-950">{pillar.title}</h2>
-                  <p className="mt-3 text-sm leading-7 text-muted">{pillar.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <section id="products" className="section-space">
+        {/* Services */}
+        <section className="section-space">
           <div className="page-shell">
-            <SectionHeading
-              eyebrow="Our product range"
-              title="Sourced from India's finest farms for the world's best buyers"
-              description="Green Ellora offers a curated range of organically grown, carefully processed, and export-compliant Indian products — each category backed by quality documentation and flexible packaging."
-            />
-
-            <div className="mt-12 grid gap-6 lg:grid-cols-2">
-              {productCategories.map((category, index) => (
+            <h2 className="section-title text-center">Our Services</h2>
+            <div className="cards-grid mt-10">
+              {coreServices.map((service, index) => (
                 <article
-                  key={category.title}
-                  className="glass-card group relative overflow-hidden px-7 py-7 transition hover:-translate-y-1"
+                  key={service.title}
+                  className="vistara-card"
+                  style={{ animationDelay: `${index * 0.15}s` }}
                 >
-                  <div className="absolute right-0 top-0 h-36 w-36 rounded-full bg-accent/10 blur-3xl transition group-hover:bg-accent/20" />
-                  <div className="relative">
-                    <div className="inline-flex rounded-full border border-primary/10 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary/80">
-                      Category {index + 1}
-                    </div>
-                    <h3 className="mt-5 text-2xl font-semibold text-slate-950">{category.title}</h3>
-                    <p className="mt-3 max-w-xl text-sm leading-7 text-muted">{category.description}</p>
-                    <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                      {category.points.map((point) => (
-                        <li key={point} className="flex items-center gap-2 text-sm font-medium text-slate-800">
-                          <BadgeCheck className="h-4 w-4 text-accent" />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="vistara-card-image">
+                    <Image
+                      src={serviceImages[service.imageKey]}
+                      alt={service.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="section-space pt-4">
-          <div className="page-shell grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-            <div className="glass-card overflow-hidden p-8 md:p-10">
-              <p className="section-kicker">Our story</p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl">
-                Rooted in India. Trusted by global buyers.
-              </h2>
-              <p className="mt-4 text-base leading-8 text-muted">
-                Green Ellora was founded on one belief — that India&apos;s rich agricultural heritage deserves
-                a premium export platform built on trust, quality, and transparency. We work directly with
-                certified organic farms across India to bring authentic, clean-label products to importers,
-                distributors, and retailers around the world.
-              </p>
-              <div className="mt-8 grid gap-4">
-                {[
-                  "Direct farm partnerships for full supply-chain traceability",
-                  "State-of-the-art processing with temperature-controlled grading",
-                  "All exports are FSSAI, APEDA & phytosanitary certified",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-3 rounded-2xl border border-primary/10 bg-primary/4 px-4 py-4">
-                    <ArrowRight className="h-4 w-4 text-primary" />
-                    <span className="text-sm font-medium text-slate-800">{item}</span>
+        {/* Product Categories */}
+        <section id="products" className="section-space scroll-mt-24 bg-white">
+          <div className="page-shell">
+            <h2 className="section-title text-center">Product Categories</h2>
+            <div className="cards-grid mt-10">
+              {productCategories.map((category, index) => (
+                <article
+                  key={category.title}
+                  className="vistara-card"
+                  style={{ animationDelay: `${index * 0.15}s` }}
+                >
+                  <div className="vistara-card-image">
+                    <Image
+                      src={categoryImages[index]}
+                      alt={category.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div id="why-us" className="space-y-5">
-              <SectionHeading
-                eyebrow="Why choose Green Ellora"
-                title="The sourcing partner that delivers on every promise"
-                description="From quality control at origin to on-time delivery at destination — here is what makes Green Ellora the preferred choice for organic import buyers worldwide."
-              />
-              <div className="grid gap-5 sm:grid-cols-2">
-                {whyChooseUs.map((item) => (
-                  <div key={item.title} className="glass-card px-6 py-6">
-                    <h3 className="text-xl font-semibold text-slate-950">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-7 text-muted">{item.description}</p>
-                  </div>
-                ))}
-              </div>
+                  <h3>{category.title.toUpperCase()}</h3>
+                  <p>{category.description}</p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
-        <section id="markets" className="section-space">
+        {/* Dynamic Product Sliders */}
+        {!loading && (
+          <>
+            <ProductSlider
+              products={handicraftProducts}
+              title="Artisanal Handicraft Collections"
+              description="Handcrafted decor and lifestyle accessories made by Indian makers for global retail programs."
+              viewAllHref="/services/handicraft-products"
+            />
+            <ProductSlider
+              products={ayurvedicProducts}
+              title="Organic Ayurvedic Powders & Herbs"
+              description="Certified traditional Ayurvedic ingredients, wellness formulations, and botanicals."
+              viewAllHref="/services/ayurvedic-products"
+            />
+          </>
+        )}
+
+        {/* Why Trust Us */}
+        <section id="why-us" className="trust-section scroll-mt-24">
           <div className="page-shell">
-            <div className="glass-card overflow-hidden px-8 py-10 md:px-10 md:py-12">
-              <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-                <div>
-                  <SectionHeading
-                    eyebrow="Worldwide reach"
-                    title="Serving organic importers and distributors across 6 continents"
-                    description="Green Ellora actively supplies buyers in North America, Europe, the Middle East, Asia-Pacific, and Africa — with export documentation tailored to each destination's import requirements."
-                  />
+            <h2 className="section-title">Why You Should Trust Us?</h2>
+            <div className="trust-points">
+              {trustPoints.map((point, index) => (
+                <div
+                  key={point}
+                  className="trust-box flex items-center gap-3"
+                  style={{ animationDelay: `${(index + 1) * 0.15}s` }}
+                >
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-[#005577]" />
+                  {point}
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                  {markets.map((market) => (
-                    <div key={market} className="rounded-2xl border border-primary/10 bg-primary/4 px-5 py-5">
-                      <div className="flex items-center gap-3">
-                        <Earth className="h-5 w-5 text-primary" />
-                        <p className="font-semibold text-slate-900">{market}</p>
-                      </div>
-                      <p className="mt-2 text-sm leading-6 text-muted">
-                        Destination-compliant documentation, competitive FOB pricing, and logistics support.
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ── Get a Quote ── */}
-        <section id="contact" className="section-space">
+        {/* Export Process */}
+        <section className="timeline-section">
           <div className="page-shell">
-            <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-              {/* Left: info */}
-              <div className="space-y-8">
-                <SectionHeading
-                  eyebrow="Get a quote"
-                  title="Tell us what you need — we'll handle the rest."
-                  description="Fill in the form and our export team will get back to you within 24 hours with product availability, pricing, and sample details."
-                />
-
-                <div className="space-y-4">
-                  {[
-                    { icon: "📦", heading: "Free Samples", body: "Request trial samples before committing to a bulk order." },
-                    { icon: "🏷️", heading: "Private Label", body: "Your brand, our quality — full custom packaging available." },
-                    { icon: "📄", heading: "Full Documentation", body: "COA, MSDS, phytosanitary, and all export certificates included." },
-                    { icon: "⏱️", heading: "24-Hour Response", body: "We respond to every enquiry within one business day." },
-                  ].map((item) => (
-                    <div key={item.heading} className="glass-card flex items-start gap-4 px-5 py-5">
-                      <span className="text-2xl">{item.icon}</span>
-                      <div>
-                        <p className="font-semibold text-slate-950">{item.heading}</p>
-                        <p className="mt-1 text-sm leading-6 text-muted">{item.body}</p>
-                      </div>
-                    </div>
-                  ))}
+            <h2 className="section-title">Our Export Process</h2>
+            <div className="timeline">
+              {exportProcess.map((step, index) => (
+                <div key={step} className="timeline-step">
+                  {index + 1}. {step}
                 </div>
-              </div>
-
-              {/* Right: form */}
-              <div className="glass-card p-7 md:p-9">
-                <QuoteForm />
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ── CTA Banner ── */}
-        <section className="pb-20">
+        {/* Testimonials */}
+        <section className="testimonials-section">
           <div className="page-shell">
-            <div className="rounded-[2rem] bg-primary px-8 py-10 text-white shadow-[0_30px_80px_rgba(15,77,60,0.2)] md:px-12 md:py-14">
-              <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-accent">Ready to source?</p>
-                  <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
-                    Let&apos;s build a long-term organic sourcing partnership.
-                  </h2>
-                  <p className="mt-4 max-w-3xl text-base leading-8 text-white/78">
-                    Whether you need a trial order, bulk contract pricing, or a private-label programme — our team is ready to discuss your requirements and provide a detailed quote within 24 hours.
-                  </p>
-                </div>
-                <a href="#contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition hover:bg-accent-soft">
-                  Get a quote
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              </div>
+            <h2 className="section-title">What Our Clients Say</h2>
+            <div className="testimonial-grid">
+              {testimonials.map((item) => (
+                <blockquote key={item.author} className="testimonial-card">
+                  &ldquo;{item.quote}&rdquo;
+                  <span className="testimonial-author">— {item.author}</span>
+                </blockquote>
+              ))}
             </div>
           </div>
         </section>
 
-        <section id="location" className="section-space">
+        {/* Videos */}
+        {!loading && videos.length > 0 && (
+          <VideoSlider
+            videos={videos}
+            title="Sourcing Stories & Craft Processes"
+            description="Take an inside look at our farming practices, artisan workshops, and export coordination."
+            viewAllHref="/videos"
+          />
+        )}
+
+        {/* Inquiry Form */}
+        <section id="contact" className="section-space scroll-mt-24">
+          <div className="page-shell max-w-2xl">
+            <h2 className="section-title text-center">Send Your Inquiry</h2>
+            <p className="section-copy text-center mx-auto mt-2">
+              Share your requirements and our export team will respond within one business day.
+            </p>
+            <div className="inquiry-section mt-8">
+              <QuoteForm />
+            </div>
+          </div>
+        </section>
+
+        {/* Location Map */}
+        <section id="location" className="section-space pt-0 scroll-mt-24">
           <div className="page-shell">
-            <div className="glass-card overflow-hidden">
-              <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-                <div className="p-8 md:p-10">
-                  <p className="section-kicker">Our office</p>
-                  <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl">
-                    Visit Green Ellora Pvt. Ltd.
-                  </h2>
-                  <p className="mt-4 max-w-xl text-sm leading-7 text-muted">
+            <h2 className="section-title text-center mb-8">Visit {siteConfig.name}</h2>
+            <div className="surface-card overflow-hidden">
+              <div className="grid gap-0 lg:grid-cols-[1fr_1.2fr]">
+                <div className="p-8 flex flex-col justify-center text-center lg:text-left">
+                  <p className="text-sm leading-relaxed text-muted">
                     Green Ellora Pvt. Ltd. near Ram Mandir, Chandol, taluka Dist. Buldhana — PIN 411057.
-                  </p>
-                  <p className="mt-6 text-sm leading-7 text-slate-800">
-                    Use the button below to open the exact location in Google Maps and start navigation directly from your device.
                   </p>
                   <a
                     href="https://www.google.com/maps/search/?api=1&query=Green+Ellora+Pvt.+Ltd+near+Ram+Mandir+Chandol+Dist+Buldhana+411057"
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-strong"
+                    className="button-primary mt-6 inline-flex self-center lg:self-start"
                   >
                     Open in Google Maps
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </div>
-                <div className="h-[22rem] bg-slate-100 md:h-[28rem]">
+                <div className="min-h-[18rem] relative lg:min-h-[22rem]">
                   <iframe
                     title="Green Ellora location"
                     src="https://maps.google.com/maps?q=Green+Ellora+Pvt.+Ltd+near+Ram+Mandir+Chandol+Dist+Buldhana+411057&output=embed"
-                    className="h-full w-full border-0"
+                    className="absolute inset-0 h-full w-full border-0"
                     allowFullScreen
                     loading="lazy"
                   />
@@ -442,6 +350,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </div>
   );

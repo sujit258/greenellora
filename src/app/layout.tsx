@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit, Poppins } from "next/font/google";
 import Script from "next/script";
 
 import "./globals.css";
 import { siteConfig } from "@/lib/site";
+import { WhatsAppChat } from "@/components/whatsapp-chat";
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-sans",
+  weight: ["400", "500", "600", "700"],
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-serif",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -62,15 +72,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} min-h-screen antialiased`}>
+    <html lang="en" className="scroll-smooth">
+      <body className={`${outfit.variable} ${poppins.variable} min-h-screen antialiased`}>
         <Script
           id="organization-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         {children}
+        <WhatsAppChat />
       </body>
     </html>
   );
 }
+

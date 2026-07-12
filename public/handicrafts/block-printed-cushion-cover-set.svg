@@ -1,0 +1,15 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#FDF5E6"/>
+  <rect x="60" y="60" width="130" height="130" rx="5" fill="#E8D5B7" stroke="#8B4513" stroke-width="2"/>
+  <circle cx="90" cy="90" r="15" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <circle cx="160" cy="90" r="15" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <circle cx="90" cy="160" r="15" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <circle cx="160" cy="160" r="15" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <circle cx="125" cy="125" r="20" fill="#DEB887" stroke="#8B4513" stroke-width="1"/>
+  <rect x="210" y="60" width="130" height="130" rx="5" fill="#F5DEB3" stroke="#8B4513" stroke-width="2"/>
+  <rect x="230" y="80" width="30" height="30" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <rect x="290" y="80" width="30" height="30" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <rect x="230" y="140" width="30" height="30" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <rect x="290" y="140" width="30" height="30" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <text x="200" y="250" font-family="Arial, sans-serif" font-size="14" fill="#8B4513" text-anchor="middle">Block-Printed Cushion Cover Set</text>
+</svg>

@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 export type QuoteFormState = {
   status: "idle" | "success" | "error";
   message: string;
+  whatsappUrl?: string;
 };
 
 export async function submitQuoteForm(
@@ -36,11 +37,38 @@ export async function submitQuoteForm(
   const quoteTo = process.env.QUOTE_TO_EMAIL ?? "hello@greenellora.com";
   const fromEmail = process.env.SMTP_FROM_EMAIL ?? smtpUser;
   const fromName = process.env.SMTP_FROM_NAME ?? "Green Ellora";
+  const whatsappNumber = (process.env.WHATSAPP_BUSINESS_NUMBER ?? "").replace(/\D/g, "");
+  const productList = products.length > 0 ? products.join(", ") : "Not specified";
+  const whatsappMessage = [
+    "*New Green Ellora Enquiry*",
+    "",
+    `*Name:* ${name}`,
+    `*Company:* ${company || "Not provided"}`,
+    `*Email:* ${email}`,
+    `*Phone:* ${phone || "Not provided"}`,
+    `*Country:* ${country || "Not provided"}`,
+    `*Enquiry type:* ${enquiryType || "Not provided"}`,
+    `*Products:* ${productList}`,
+    "",
+    "*Message:*",
+    message,
+  ].join("\n");
+  const whatsappUrl = whatsappNumber
+    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`
+    : undefined;
 
   if (!smtpHost || !smtpUser || !smtpPass || !fromEmail) {
+    if (whatsappUrl) {
+      return {
+        status: "success",
+        message: "Your enquiry is ready to send on WhatsApp.",
+        whatsappUrl,
+      };
+    }
+
     return {
       status: "error",
-      message: "Quote service is not configured yet. Please try again in a few minutes.",
+      message: "Quote service is not configured yet. Configure email or WhatsApp first.",
     };
   }
 
@@ -54,7 +82,6 @@ export async function submitQuoteForm(
     },
   });
 
-  const productList = products.length > 0 ? products.join(", ") : "Not specified";
   const subject = `New quote request from ${name}`;
   const text = [
     "New quote enquiry submitted:",
@@ -95,6 +122,14 @@ export async function submitQuoteForm(
     });
   } catch (error) {
     console.error("[Green Ellora] Failed to send quote email", error);
+    if (whatsappUrl) {
+      return {
+        status: "success",
+        message: "Email is unavailable, but your enquiry is ready to send on WhatsApp.",
+        whatsappUrl,
+      };
+    }
+
     return {
       status: "error",
       message: "Unable to submit enquiry right now. Please try again shortly.",
@@ -104,5 +139,6 @@ export async function submitQuoteForm(
   return {
     status: "success",
     message: "Thank you! We will review your enquiry and respond within 24 hours.",
+    whatsappUrl,
   };
 }

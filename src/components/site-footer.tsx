@@ -1,59 +1,55 @@
 import { Mail, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
 
-import { siteConfig } from "@/lib/site";
+import { getFlatNavLinks, siteConfig } from "@/lib/site";
 
 export function SiteFooter() {
-  return (
-    <footer className="border-t border-primary/10 bg-primary-strong text-white">
-      <div className="page-shell grid gap-12 py-14 md:grid-cols-[1.3fr_0.7fr]">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.26em] text-white/65">Green Ellora</p>
-          <h2 className="mt-4 max-w-xl text-3xl font-semibold tracking-tight md:text-4xl">
-            Ready to import premium organic products from India?
-          </h2>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-white/72">
-            Reach out to discuss product availability, minimum order quantities, pricing, or to request a free sample shipment for quality evaluation.
-          </p>
-        </div>
+  const navLinks = getFlatNavLinks();
 
-        <div className="space-y-5 rounded-3xl border border-white/10 bg-white/6 p-6">
-          <div className="flex items-start gap-3">
-            <Mail className="mt-1 h-5 w-5 text-accent" />
-            <div>
-              <p className="text-sm text-white/60">Email</p>
-              <a href={`mailto:${siteConfig.email}`} className="font-medium hover:text-accent">
-                {siteConfig.email}
-              </a>
-            </div>
+  return (
+    <footer id="contact" className="site-footer">
+      <div className="page-shell py-12 md:py-16">
+        <div className="flex flex-col items-center gap-6 text-center">
+          <div className="flex items-center gap-3">
+            <span className="brand-logo">GE</span>
+            <p className="text-xl font-serif font-semibold text-white">{siteConfig.name}</p>
           </div>
-          <div className="flex items-start gap-3">
-            <Phone className="mt-1 h-5 w-5 text-accent" />
-            <div>
-              <p className="text-sm text-white/60">Phone</p>
-              <a href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`} className="font-medium hover:text-accent">
-                {siteConfig.phone}
-              </a>
-            </div>
+
+          <p className="max-w-2xl text-sm leading-relaxed text-white/75">
+            Premium organic spices, wellness superfoods, artisan handicrafts, and Ayurvedic formulations — exported globally from India with certified traceability.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm">
+            <a href={`mailto:${siteConfig.email}`} className="inline-flex items-center gap-2">
+              <Mail className="h-4 w-4 text-[#ffd700]" />
+              {siteConfig.email}
+            </a>
+            <a href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`} className="inline-flex items-center gap-2">
+              <Phone className="h-4 w-4 text-[#ffd700]" />
+              {siteConfig.phone}
+            </a>
+            <span className="inline-flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-[#ffd700]" />
+              {siteConfig.location}
+            </span>
           </div>
-          <div className="flex items-start gap-3">
-            <MapPin className="mt-1 h-5 w-5 text-accent" />
-            <div>
-              <p className="text-sm text-white/60">Origin</p>
-              <p className="font-medium">{siteConfig.location}</p>
-            </div>
-          </div>
+
+          <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2 pt-2">
+            {navLinks.map((item) => (
+              <Link key={item.href} href={item.href} className="text-sm text-white/70 hover:text-[#ffd700]">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
+
       <div className="border-t border-white/10">
-        <div className="page-shell flex flex-col gap-3 py-5 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-          <div className="flex gap-5">
-            {siteConfig.nav.map((item) => (
-              <a key={item.href} href={item.href} className="transition hover:text-white">
-                {item.label}
-              </a>
-            ))}
-          </div>
+        <div className="page-shell py-5 text-center text-xs text-white/50">
+          <p>
+            © {new Date().getFullYear()} {siteConfig.name} Pvt. Ltd. All rights reserved.
+          </p>
+          <p className="mt-1 tracking-wide">ORGANIC PRODUCTS MANUFACTURER & EXPORTER</p>
         </div>
       </div>
     </footer>
