@@ -1,0 +1,10 @@
+<svg width="400" height="225" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="225" fill="#059669"/>
+  <ellipse cx="200" cy="112" rx="120" ry="80" fill="#10B981" opacity="0.5"/>
+  <rect x="160" cy="85" width="80" height="60" rx="5" fill="#34D399" opacity="0.6"/>
+  <rect x="170" cy="130" width="60" height="40" rx="5" fill="#34D399" opacity="0.6"/>
+  <rect x="140" y="155" width="120" height="30" rx="5" fill="#6EE7B7"/>
+  <text x="200" y="175" font-family="Arial, sans-serif" font-size="12" fill="#FFFFFF" text-anchor="middle">Sustainable Packaging</text>
+  <circle cx="200" cy="112" r="40" fill="#FFFFFF" opacity="0.2"/>
+  <polygon points="190,102 190,122 210,112" fill="#FFFFFF"/>
+</svg>

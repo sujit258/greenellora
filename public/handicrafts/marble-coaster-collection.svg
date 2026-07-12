@@ -1,0 +1,13 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F0F0F0"/>
+  <circle cx="100" cy="120" r="40" fill="#E8E8E8" stroke="#A9A9A9" stroke-width="2"/>
+  <circle cx="100" cy="120" r="25" fill="#D3D3D3" stroke="#A9A9A9" stroke-width="1"/>
+  <circle cx="200" cy="120" r="40" fill="#DCDCDC" stroke="#A9A9A9" stroke-width="2"/>
+  <circle cx="200" cy="120" r="25" fill="#C0C0C0" stroke="#A9A9A9" stroke-width="1"/>
+  <circle cx="300" cy="120" r="40" fill="#E8E8E8" stroke="#A9A9A9" stroke-width="2"/>
+  <circle cx="300" cy="120" r="25" fill="#D3D3D3" stroke="#A9A9A9" stroke-width="1"/>
+  <rect x="70" y="200" width="80" height="50" rx="5" fill="#D3D3D3" stroke="#A9A9A9" stroke-width="2"/>
+  <rect x="160" y="200" width="80" height="50" rx="5" fill="#C0C0C0" stroke="#A9A9A9" stroke-width="2"/>
+  <rect x="250" y="200" width="80" height="50" rx="5" fill="#D3D3D3" stroke="#A9A9A9" stroke-width="2"/>
+  <text x="200" y="280" font-family="Arial, sans-serif" font-size="14" fill="#696969" text-anchor="middle">Marble Coaster Collection</text>
+</svg>

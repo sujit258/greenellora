@@ -1,0 +1,512 @@
+{
+  ".vscode/tasks.json": {
+    "mtime": 1782385789.762383,
+    "ast_hash": "de23155d37a38018b1cb80d32b48b568",
+    "semantic_hash": ""
+  },
+  "eslint.config.mjs": {
+    "mtime": 1782385789.3874662,
+    "ast_hash": "c012054750e599fa51177105c48754d0",
+    "semantic_hash": ""
+  },
+  "next-env.d.ts": {
+    "mtime": 1782395029.5919356,
+    "ast_hash": "29f60a376e12bf72b67d4994fcc84214",
+    "semantic_hash": ""
+  },
+  "next.config.ts": {
+    "mtime": 1782819957.9247873,
+    "ast_hash": "af4f3de289d7c7a7a74b4260eee83140",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1782559323.0339303,
+    "ast_hash": "4e732d1cd19496baabbe58a6f04b0c3c",
+    "semantic_hash": ""
+  },
+  "postcss.config.mjs": {
+    "mtime": 1782385789.62179,
+    "ast_hash": "239f3ebf717465dc636818a1a619398d",
+    "semantic_hash": ""
+  },
+  "scripts/seed-admin.js": {
+    "mtime": 1782559425.5285175,
+    "ast_hash": "397deec930eee0f4041909f664bdf315",
+    "semantic_hash": ""
+  },
+  "scripts/seed.js": {
+    "mtime": 1782558298.1873121,
+    "ast_hash": "e53d26f744b5801491468562f51a45cb",
+    "semantic_hash": ""
+  },
+  "scripts/seed.ts": {
+    "mtime": 1782544906.9619114,
+    "ast_hash": "92df328da2e382056bbfa9b7a41cd847",
+    "semantic_hash": ""
+  },
+  "src/app/actions.ts": {
+    "mtime": 1782385789.7936256,
+    "ast_hash": "714f38f8902feea869cc7956e36e1964",
+    "semantic_hash": ""
+  },
+  "src/app/admin/layout.tsx": {
+    "mtime": 1782559458.0931292,
+    "ast_hash": "86df2dccaed6f98823a86d347603a790",
+    "semantic_hash": ""
+  },
+  "src/app/admin/login/page.tsx": {
+    "mtime": 1782559337.2357435,
+    "ast_hash": "6d4f03bd72d55a4a2558818545e3cf24",
+    "semantic_hash": ""
+  },
+  "src/app/admin/page.tsx": {
+    "mtime": 1782559482.0759158,
+    "ast_hash": "7e5ac7d6d6f5a68c22881002e4a72456",
+    "semantic_hash": ""
+  },
+  "src/app/admin/products/ayurvedic/[productId]/edit/page.tsx": {
+    "mtime": 1782583739.7950747,
+    "ast_hash": "bd80e336f230c73b44b339ba9e4ad119",
+    "semantic_hash": ""
+  },
+  "src/app/admin/products/ayurvedic/new/page.tsx": {
+    "mtime": 1782583716.33106,
+    "ast_hash": "99641415e9679d595a5739088bdae8d8",
+    "semantic_hash": ""
+  },
+  "src/app/admin/products/ayurvedic/page.tsx": {
+    "mtime": 1782561360.06274,
+    "ast_hash": "31c94ded57cf5754fa56f5167c6a365c",
+    "semantic_hash": ""
+  },
+  "src/app/admin/products/handicraft/[productId]/edit/page.tsx": {
+    "mtime": 1782583731.7040052,
+    "ast_hash": "d89298229c0a1b7d4e98e76fcff34b4b",
+    "semantic_hash": ""
+  },
+  "src/app/admin/products/handicraft/new/page.tsx": {
+    "mtime": 1782583709.285786,
+    "ast_hash": "7c8ec4e9ec473b66dfe2f1e40f46179b",
+    "semantic_hash": ""
+  },
+  "src/app/admin/products/handicraft/page.tsx": {
+    "mtime": 1782561346.9073248,
+    "ast_hash": "edd7b2f5a788e90a414afbd54731fc0e",
+    "semantic_hash": ""
+  },
+  "src/app/admin/videos/[videoId]/edit/page.tsx": {
+    "mtime": 1782583748.1501806,
+    "ast_hash": "41b1a6cbe6a6b091d9cf306ef027a5da",
+    "semantic_hash": ""
+  },
+  "src/app/admin/videos/new/page.tsx": {
+    "mtime": 1782583722.7809694,
+    "ast_hash": "0bf0cbcbc4cd09fd57d82e004ba663ff",
+    "semantic_hash": ""
+  },
+  "src/app/admin/videos/page.tsx": {
+    "mtime": 1782561375.655856,
+    "ast_hash": "14ede522f035369ec8b0fd6d481e7aac",
+    "semantic_hash": ""
+  },
+  "src/app/api/admin/login/route.ts": {
+    "mtime": 1782558046.564336,
+    "ast_hash": "8e73e97311dd46612090de6a27e1ce99",
+    "semantic_hash": ""
+  },
+  "src/app/api/admin/logout/route.ts": {
+    "mtime": 1782558049.7290623,
+    "ast_hash": "7c4f5f5b36f1d2018b2b3f2a40bebbe0",
+    "semantic_hash": ""
+  },
+  "src/app/api/admin/me/route.ts": {
+    "mtime": 1782558057.2379136,
+    "ast_hash": "ff22bb0b2c265c62a9a47130cb3d79ae",
+    "semantic_hash": ""
+  },
+  "src/app/api/ayurvedic-products/[id]/route.ts": {
+    "mtime": 1782561264.5923407,
+    "ast_hash": "d2e9d9765877c6416367fd41d8c7b376",
+    "semantic_hash": ""
+  },
+  "src/app/api/ayurvedic-products/route.ts": {
+    "mtime": 1782558076.5737984,
+    "ast_hash": "b46c65ff68739742f12b8182e0d6595f",
+    "semantic_hash": ""
+  },
+  "src/app/api/handicraft-products/[id]/route.ts": {
+    "mtime": 1782560983.6930478,
+    "ast_hash": "563afc3a10b9fccddeb40a9838c7fc73",
+    "semantic_hash": ""
+  },
+  "src/app/api/handicraft-products/route.ts": {
+    "mtime": 1782558087.2409463,
+    "ast_hash": "0f0269cf160044cd24a922e489be5a4b",
+    "semantic_hash": ""
+  },
+  "src/app/api/upload/route.ts": {
+    "mtime": 1782558057.6103835,
+    "ast_hash": "4f73c3b9c3d1c6de5217ecb0b0ba6514",
+    "semantic_hash": ""
+  },
+  "src/app/api/videos/[id]/route.ts": {
+    "mtime": 1782819957.9247873,
+    "ast_hash": "f831a0080644c9389ad2bf5f55933a97",
+    "semantic_hash": ""
+  },
+  "src/app/api/videos/route.ts": {
+    "mtime": 1782819957.8935032,
+    "ast_hash": "1da68ad1fc61f6ed77453dc13a45f4d3",
+    "semantic_hash": ""
+  },
+  "src/app/layout.tsx": {
+    "mtime": 1782385789.949839,
+    "ast_hash": "e26e3605e4e6baeb15d5b20cfeef11c3",
+    "semantic_hash": ""
+  },
+  "src/app/manifest.ts": {
+    "mtime": 1782385789.9810803,
+    "ast_hash": "7383c499cc57e5d9bd5c79d04be7ee9d",
+    "semantic_hash": ""
+  },
+  "src/app/page.tsx": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "ebc834ae87a21b976d261a9fe6598b92",
+    "semantic_hash": ""
+  },
+  "src/app/robots.ts": {
+    "mtime": 1782385790.0591874,
+    "ast_hash": "cd2f53ac494bb3cb78f09446c7440d91",
+    "semantic_hash": ""
+  },
+  "src/app/services/[slug]/page.tsx": {
+    "mtime": 1782819957.9247873,
+    "ast_hash": "372b29983b8e456dc3d19f70c39b8167",
+    "semantic_hash": ""
+  },
+  "src/app/services/ayurvedic-products/[slug]/page.tsx": {
+    "mtime": 1782819957.8935032,
+    "ast_hash": "5457806ecb8b8bdc53925c320d8c86a1",
+    "semantic_hash": ""
+  },
+  "src/app/services/ayurvedic-products/page.tsx": {
+    "mtime": 1782819958.1183927,
+    "ast_hash": "b87c9f45d8f8c539cb5bbd8752bfb9f8",
+    "semantic_hash": ""
+  },
+  "src/app/services/handicraft-products/[slug]/page.tsx": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "ce5e9a4079e7d7a4990fccb216d175f3",
+    "semantic_hash": ""
+  },
+  "src/app/services/handicraft-products/page.tsx": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "2a21d699bb6e803b4a022e90324780fc",
+    "semantic_hash": ""
+  },
+  "src/app/sitemap.ts": {
+    "mtime": 1782390032.448738,
+    "ast_hash": "2a076a88df81565cc79b500d93cbed27",
+    "semantic_hash": ""
+  },
+  "src/app/videos/page.tsx": {
+    "mtime": 1782819957.9247873,
+    "ast_hash": "63948c8fea6852b5d04f95e259d1509c",
+    "semantic_hash": ""
+  },
+  "src/components/admin/AdminHeader.tsx": {
+    "mtime": 1782558307.3989744,
+    "ast_hash": "bd7ff35fe5e0bc9584af8b1277478ffd",
+    "semantic_hash": ""
+  },
+  "src/components/admin/AdminLayout.tsx": {
+    "mtime": 1782559348.1931381,
+    "ast_hash": "a624502e20ff4018383bff86eda55d7f",
+    "semantic_hash": ""
+  },
+  "src/components/admin/AdminProvider.tsx": {
+    "mtime": 1782558286.5860467,
+    "ast_hash": "dfc2d688476d47ddf2070578eb3e87fa",
+    "semantic_hash": ""
+  },
+  "src/components/admin/AdminSidebar.tsx": {
+    "mtime": 1782558299.669161,
+    "ast_hash": "a823fe436ee10884ea6cde3e02d22e60",
+    "semantic_hash": ""
+  },
+  "src/components/admin/DeleteModal.tsx": {
+    "mtime": 1782558327.6357856,
+    "ast_hash": "7461fee18c333ef13821e2cff59a3dd7",
+    "semantic_hash": ""
+  },
+  "src/components/admin/DynamicListInput.tsx": {
+    "mtime": 1782558354.175725,
+    "ast_hash": "46270bc4da4388bee39da6a9f6dcc44f",
+    "semantic_hash": ""
+  },
+  "src/components/admin/ImageUpload.tsx": {
+    "mtime": 1782558343.3386862,
+    "ast_hash": "7d573f28324c6c02478f81638f880945",
+    "semantic_hash": ""
+  },
+  "src/components/admin/Toast.tsx": {
+    "mtime": 1782558317.698751,
+    "ast_hash": "c81e0bf9c27d3f6413cae2aeebe8e9f2",
+    "semantic_hash": ""
+  },
+  "src/components/certifications-strip.tsx": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "b981ceb9e17789bd9b048727ef759773",
+    "semantic_hash": ""
+  },
+  "src/components/nav-menu.tsx": {
+    "mtime": 1782819957.8935032,
+    "ast_hash": "9b5594b621a671c9e6109702c9301a5c",
+    "semantic_hash": ""
+  },
+  "src/components/product-card.tsx": {
+    "mtime": 1782819957.9247873,
+    "ast_hash": "f9d9b080d37ce18ffcff985a3321826b",
+    "semantic_hash": ""
+  },
+  "src/components/product-slider.tsx": {
+    "mtime": 1782819957.9247873,
+    "ast_hash": "ab0ddb10e76630e8e5f71d76a9211b7a",
+    "semantic_hash": ""
+  },
+  "src/components/quote-form.tsx": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "0b919dcd3a5ab91ca191b6ce624ffe25",
+    "semantic_hash": ""
+  },
+  "src/components/section-heading.tsx": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "291d90198231f645a248385ef2c30afe",
+    "semantic_hash": ""
+  },
+  "src/components/site-footer.tsx": {
+    "mtime": 1782819957.8935032,
+    "ast_hash": "785990489c963a1259731a2f8746a2c8",
+    "semantic_hash": ""
+  },
+  "src/components/site-header.tsx": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "b2436566bd751120f015beffe0311807",
+    "semantic_hash": ""
+  },
+  "src/components/video-card.tsx": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "e6597337cd824a4e222d8736734cb3b2",
+    "semantic_hash": ""
+  },
+  "src/components/video-slider.tsx": {
+    "mtime": 1782819957.9247873,
+    "ast_hash": "f1669144330cb5bef60359340512dd07",
+    "semantic_hash": ""
+  },
+  "src/lib/auth.ts": {
+    "mtime": 1782558032.337263,
+    "ast_hash": "0ff471658d75dec884f39799dead20c2",
+    "semantic_hash": ""
+  },
+  "src/lib/ayurvedic.ts": {
+    "mtime": 1782558314.5282867,
+    "ast_hash": "08c21a7511d64e5982684c117d5879f8",
+    "semantic_hash": ""
+  },
+  "src/lib/db.ts": {
+    "mtime": 1782543021.540972,
+    "ast_hash": "16e61e6f15c4b29388bf8472410cd781",
+    "semantic_hash": ""
+  },
+  "src/lib/handicrafts.ts": {
+    "mtime": 1782558319.5116675,
+    "ast_hash": "c5d16577f42c829fe5a0161ca86b72a8",
+    "semantic_hash": ""
+  },
+  "src/lib/services.ts": {
+    "mtime": 1782388972.9497392,
+    "ast_hash": "45b31a3a86995f46c5b0bf23d7cacd16",
+    "semantic_hash": ""
+  },
+  "src/lib/site.ts": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "302782b99ed7420f07c15283e8b530fc",
+    "semantic_hash": ""
+  },
+  "src/lib/video-utils.ts": {
+    "mtime": 1782819957.8935032,
+    "ast_hash": "d362c11ebb732c68f43a36ecbb8cd263",
+    "semantic_hash": ""
+  },
+  "src/lib/videos.ts": {
+    "mtime": 1782819958.0870993,
+    "ast_hash": "0cab13775d594f19c87854e5f1079cb9",
+    "semantic_hash": ""
+  },
+  "src/middleware.ts": {
+    "mtime": 1782558032.6764958,
+    "ast_hash": "06ac0af296b50930c8385122c13c72a9",
+    "semantic_hash": ""
+  },
+  "src/models/Admin.ts": {
+    "mtime": 1782558023.677965,
+    "ast_hash": "d4fa567964f9d71c27a9bb1c4a3ba3c4",
+    "semantic_hash": ""
+  },
+  "src/models/AyurvedicProduct.ts": {
+    "mtime": 1782543045.8583713,
+    "ast_hash": "4c1086f5e9160888d107fa653c426745",
+    "semantic_hash": ""
+  },
+  "src/models/HandicraftProduct.ts": {
+    "mtime": 1782543034.289032,
+    "ast_hash": "0a877458d94319b4f5cf6e78421dd0d6",
+    "semantic_hash": ""
+  },
+  "src/models/Video.ts": {
+    "mtime": 1782543058.172959,
+    "ast_hash": "9cb3a32ffbaed6b8275f70d8ed9aa54e",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1782385789.668655,
+    "ast_hash": "ab158c19f221f4dcf1d7c3b20719569b",
+    "semantic_hash": ""
+  },
+  ".github/copilot-instructions.md": {
+    "mtime": 1782385789.7155204,
+    "ast_hash": "e08ba7dbe09683eb5a688f5f8d7d524c",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1782385789.322873,
+    "ast_hash": "5e63226d83c68b0aad891b4f77cc61c9",
+    "semantic_hash": ""
+  },
+  "public/ayurvedic/ashwagandha-powder.svg": {
+    "mtime": 1782394271.6253924,
+    "ast_hash": "8301bef05721d04fc3051dd40bac6c17",
+    "semantic_hash": ""
+  },
+  "public/ayurvedic/immunity-kadha-blend.svg": {
+    "mtime": 1782394296.0381918,
+    "ast_hash": "76d3a4e287c2a787b4a2f55af193a6e2",
+    "semantic_hash": ""
+  },
+  "public/ayurvedic/moringa-leaf-powder.svg": {
+    "mtime": 1782394284.3628542,
+    "ast_hash": "d5531d938cefc6afc7c599c0400dedac",
+    "semantic_hash": ""
+  },
+  "public/ayurvedic/neem-powder.svg": {
+    "mtime": 1782394291.2383854,
+    "ast_hash": "41804c26acba7ca606cd4bd92786b823",
+    "semantic_hash": ""
+  },
+  "public/ayurvedic/triphala-blend.svg": {
+    "mtime": 1782394280.8925402,
+    "ast_hash": "8c8865f2a3f81d23a2659c196e874af5",
+    "semantic_hash": ""
+  },
+  "public/ayurvedic/tulsi-leaf-powder.svg": {
+    "mtime": 1782394277.4506967,
+    "ast_hash": "e24da21403227aa361ff53e79ba369a6",
+    "semantic_hash": ""
+  },
+  "public/handicrafts/block-printed-cushion-cover-set.svg": {
+    "mtime": 1782393212.0328112,
+    "ast_hash": "401286e86d10e078f52b7f440a27926b",
+    "semantic_hash": ""
+  },
+  "public/handicrafts/brass-diya-gift-set.svg": {
+    "mtime": 1782393205.2291398,
+    "ast_hash": "6285c7959fa6de5247e9deb7d0c725ef",
+    "semantic_hash": ""
+  },
+  "public/handicrafts/carved-wooden-serving-tray.svg": {
+    "mtime": 1782393197.8861206,
+    "ast_hash": "3594ef985236dd2b8a9c0939435e7ca3",
+    "semantic_hash": ""
+  },
+  "public/handicrafts/ceramic-mug-gift-box.svg": {
+    "mtime": 1782393251.4087543,
+    "ast_hash": "f5987701d678aaf8968ebcf475565def",
+    "semantic_hash": ""
+  },
+  "public/handicrafts/jute-storage-basket-set.svg": {
+    "mtime": 1782393244.7595441,
+    "ast_hash": "aa5f64aafd88f0f88dd75ec307217718",
+    "semantic_hash": ""
+  },
+  "public/handicrafts/marble-coaster-collection.svg": {
+    "mtime": 1782393219.4793055,
+    "ast_hash": "87d6789733ff94c508e2f54a2191c1ec",
+    "semantic_hash": ""
+  },
+  "public/videos/ayurvedic-herbs.svg": {
+    "mtime": 1782543673.5496325,
+    "ast_hash": "b28d8d94abece81d06994742ba804c1b",
+    "semantic_hash": ""
+  },
+  "public/videos/handicraft-artisans.svg": {
+    "mtime": 1782543672.7650032,
+    "ast_hash": "8b4e9d8e3b12c8e7f5278821a14e101e",
+    "semantic_hash": ""
+  },
+  "public/videos/organic-farming.svg": {
+    "mtime": 1782543671.3131468,
+    "ast_hash": "c480fb28e1f89a1e4f9e9078601f8b98",
+    "semantic_hash": ""
+  },
+  "public/videos/quality-control.svg": {
+    "mtime": 1782543675.0705993,
+    "ast_hash": "ca47fed2e376830b71ed3390a1372caa",
+    "semantic_hash": ""
+  },
+  "public/videos/spice-processing.svg": {
+    "mtime": 1782543676.160495,
+    "ast_hash": "4479c30dc06ffcf1879f657ba8846edd",
+    "semantic_hash": ""
+  },
+  "public/videos/sustainable-packaging.svg": {
+    "mtime": 1782543677.16873,
+    "ast_hash": "e00842093cef5aecd9b416fd77e74b82",
+    "semantic_hash": ""
+  },
+  "src/app/icon.svg": {
+    "mtime": 1782385789.8873513,
+    "ast_hash": "e9407975b538a911857ef49f94803993",
+    "semantic_hash": ""
+  },
+  "src/assets/chana.jpeg": {
+    "mtime": 1782385790.481596,
+    "ast_hash": "435d5944c32be820cbfcbb6865c5d956",
+    "semantic_hash": ""
+  },
+  "src/assets/corn.png": {
+    "mtime": 1782385790.6534295,
+    "ast_hash": "aabde4513fd0db87d36fe830b02d4c77",
+    "semantic_hash": ""
+  },
+  "src/assets/haladi.jpeg": {
+    "mtime": 1782385790.8408852,
+    "ast_hash": "ad106a25fc5abdee6e05a180905442ac",
+    "semantic_hash": ""
+  },
+  "src/assets/honey.jpeg": {
+    "mtime": 1782385791.028341,
+    "ast_hash": "ae26a491fa927a7061b10671a6a3c168",
+    "semantic_hash": ""
+  },
+  "src/assets/jaggury.jpeg": {
+    "mtime": 1782385791.106462,
+    "ast_hash": "e68a87d34a4ee24bce800c99cf1c82f8",
+    "semantic_hash": ""
+  },
+  "src/assets/tea.jpeg": {
+    "mtime": 1782385791.3258407,
+    "ast_hash": "39b1c6a68388252e8ca4a63eb6504b40",
+    "semantic_hash": ""
+  }
+}

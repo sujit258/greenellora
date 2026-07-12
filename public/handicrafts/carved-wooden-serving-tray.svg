@@ -1,0 +1,9 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F5F0E8"/>
+  <rect x="50" y="80" width="300" height="140" rx="10" fill="#D4A574" stroke="#8B6914" stroke-width="2"/>
+  <rect x="70" y="100" width="260" height="100" rx="5" fill="#E8C9A0"/>
+  <path d="M60 90 L340 90 L340 95 L60 95 Z" fill="#8B6914"/>
+  <path d="M60 205 L340 205 L340 210 L60 210 Z" fill="#8B6914"/>
+  <circle cx="200" cy="150" r="30" fill="#C49A6C" stroke="#8B6914" stroke-width="1"/>
+  <text x="200" y="250" font-family="Arial, sans-serif" font-size="14" fill="#8B6914" text-anchor="middle">Wooden Serving Tray</text>
+</svg>

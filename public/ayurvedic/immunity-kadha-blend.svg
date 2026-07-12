@@ -1,0 +1,18 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#FFF8E8"/>
+  <circle cx="100" cy="120" r="35" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+  <circle cx="180" cy="120" r="35" fill="#32CD32" stroke="#228B22" stroke-width="2"/>
+  <circle cx="260" cy="120" r="35" fill="#FF6347" stroke="#B22222" stroke-width="2"/>
+  <circle cx="340" cy="120" r="35" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+  <ellipse cx="100" cy="120" rx="20" ry="15" fill="#FFEC8B" stroke="#DAA520" stroke-width="1"/>
+  <ellipse cx="180" cy="120" rx="20" ry="15" fill="#98FB98" stroke="#228B22" stroke-width="1"/>
+  <ellipse cx="260" cy="120" rx="20" ry="15" fill="#FF7F50" stroke="#B22222" stroke-width="1"/>
+  <ellipse cx="340" cy="120" rx="20" ry="15" fill="#CD853F" stroke="#654321" stroke-width="1"/>
+  <rect x="80" y="170" width="40" height="25" rx="3" fill="#FFD700" stroke="#DAA520" stroke-width="1"/>
+  <rect x="160" y="170" width="40" height="25" rx="3" fill="#32CD32" stroke="#228B22" stroke-width="1"/>
+  <rect x="240" y="170" width="40" height="25" rx="3" fill="#FF6347" stroke="#B22222" stroke-width="1"/>
+  <rect x="320" y="170" width="40" height="25" rx="3" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  <rect x="130" y="220" width="140" height="40" rx="5" fill="#FAF0E6" stroke="#DAA520" stroke-width="2"/>
+  <text x="200" y="245" font-family="Arial, sans-serif" font-size="12" fill="#8B4513" text-anchor="middle">Herbal Immunity Blend</text>
+  <text x="200" y="280" font-family="Arial, sans-serif" font-size="14" fill="#8B4513" text-anchor="middle">Immunity Kadha Blend</text>
+</svg>
