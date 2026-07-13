@@ -39,12 +39,12 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-[linear-gradient(135deg,color-mix(in_srgb,var(--primary)_10%,white),color-mix(in_srgb,var(--accent)_15%,white))] p-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="flex items-center justify-center mb-8">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--primary)] text-white">
                 <Leaf className="h-6 w-6" />
               </div>
               <div>
@@ -100,9 +100,9 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-strong transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-lg bg-[var(--primary)] py-3 font-semibold text-white transition hover:bg-[var(--primary-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Signing in..." : "Log In"}
             </button>
           </form>
         </div>

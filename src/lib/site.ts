@@ -156,7 +156,6 @@ export const certifications = [
   "APEDA Registered",
   "USDA Organic",
   "ISO Quality",
-  "Phytosanitary Compliant",
   "Export Documentation",
 ];
 

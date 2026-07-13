@@ -605,6 +605,104 @@
   color: #ef4444;
 }
 
+/* ═══════════════════════════════════════════
+   CATEGORY SELECT WITH ADD NEW
+═══════════════════════════════════════════ */
+.category-select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.category-select-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.55rem 0.875rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.625rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.15s;
+  font-family: inherit;
+}
+
+.category-add-btn:hover {
+  background: var(--primary-dark, #0a3228);
+  transform: translateY(-1px);
+}
+
+.category-new-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  animation: slideDown 0.18s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.category-new-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.category-confirm-btn,
+.category-cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.category-confirm-btn {
+  background: #22c55e;
+  color: white;
+}
+
+.category-confirm-btn:hover:not(:disabled) {
+  background: #16a34a;
+  transform: scale(1.05);
+}
+
+.category-confirm-btn:disabled {
+  background: #d1fae5;
+  color: #6ee7b7;
+  cursor: not-allowed;
+}
+
+.category-cancel-btn {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.category-cancel-btn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+  transform: scale(1.05);
+}
+
+
 .admin-form-actions {
   display: flex;
   gap: 1rem;
