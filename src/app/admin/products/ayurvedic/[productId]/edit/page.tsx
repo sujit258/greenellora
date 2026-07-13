@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Save } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ImageUpload from "@/components/admin/ImageUpload";
+import CategorySelect from "@/components/admin/CategorySelect";
 import { useAdmin } from "@/components/admin/AdminProvider";
 import Link from "next/link";
 import "../../../../admin.css";
@@ -160,20 +161,19 @@ export default function EditAyurvedicProductPage({ params }: { params: Promise<{
 
             <div className="admin-form-group">
               <label className="admin-form-label">Category *</label>
-              <select
+              <CategorySelect
                 name="category"
                 value={formData.category}
-                onChange={handleChange}
-                className="admin-form-select"
+                onChange={(val) => setFormData({ ...formData, category: val })}
+                options={[
+                  "Herbal Powder",
+                  "Immunity Booster",
+                  "Wellness Blend",
+                  "Traditional Formula",
+                  "Other",
+                ]}
                 required
-              >
-                <option value="">Select category</option>
-                <option value="Herbal Powder">Herbal Powder</option>
-                <option value="Immunity Booster">Immunity Booster</option>
-                <option value="Wellness Blend">Wellness Blend</option>
-                <option value="Traditional Formula">Traditional Formula</option>
-                <option value="Other">Other</option>
-              </select>
+              />
             </div>
 
             <ImageUpload

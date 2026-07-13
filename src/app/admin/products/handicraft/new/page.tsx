@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Save } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ImageUpload from "@/components/admin/ImageUpload";
+import CategorySelect from "@/components/admin/CategorySelect";
 import { useAdmin } from "@/components/admin/AdminProvider";
 import "../../../admin.css";
 
@@ -107,21 +108,20 @@ export default function NewHandicraftProductPage() {
 
             <div className="admin-form-group">
               <label className="admin-form-label">Category *</label>
-              <select
+              <CategorySelect
                 name="category"
                 value={formData.category}
-                onChange={handleChange}
-                className="admin-form-select"
+                onChange={(val) => setFormData({ ...formData, category: val })}
+                options={[
+                  "Marble",
+                  "Ceramic",
+                  "Brass",
+                  "Wood",
+                  "Textile",
+                  "Other",
+                ]}
                 required
-              >
-                <option value="">Select category</option>
-                <option value="Marble">Marble</option>
-                <option value="Ceramic">Ceramic</option>
-                <option value="Brass">Brass</option>
-                <option value="Wood">Wood</option>
-                <option value="Textile">Textile</option>
-                <option value="Other">Other</option>
-              </select>
+              />
             </div>
 
             <ImageUpload
