@@ -440,6 +440,13 @@ h1, h2, h3, h4, .font-serif {
   border-color: #ffffff;
 }
 
+/* Hide "Explore Products" button on mobile only */
+@media (max-width: 640px) {
+  .hero-btn-outline {
+    display: none;
+  }
+}
+
 .hero-eyebrow {
   font-size: 1rem;
   font-weight: 500;
@@ -1303,6 +1310,8 @@ h1, h2, h3, h4, .font-serif {
   box-shadow: 0 20px 60px rgba(45, 80, 22, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
   padding: 2rem 2rem 1.75rem;
   border: 1px solid rgba(74, 124, 35, 0.1);
+  overflow: hidden;
+  position: relative;
 }
 
 @media (max-width: 640px) {
@@ -1423,6 +1432,119 @@ textarea.input-field {
   resize: none;
 }
 
+/* ── Phone Number Field ── */
+.qf-phone-wrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1.5px solid #d4d4d4;
+  background: #fafafa;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
+  height: 2.75rem;
+  overflow: hidden;
+}
+
+.qf-phone-wrap:focus-within {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(74, 124, 35, 0.12);
+}
+
+.qf-phone-wrap.qf-input-error {
+  border-color: #ef4444 !important;
+  background: #fff5f5 !important;
+}
+
+.qf-phone-wrap.qf-input-error:focus-within {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+}
+
+.qf-dial-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.qf-dial-select {
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--foreground);
+  padding: 0 1.75rem 0 0.65rem;
+  height: 100%;
+  cursor: pointer;
+  outline: none;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 500;
+  min-width: 5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.qf-dial-select option {
+  background: #ffffff;
+  color: var(--foreground);
+}
+
+.qf-dial-chevron {
+  position: absolute;
+  right: 0.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 0.875rem;
+  width: 0.875rem;
+  color: #888;
+  pointer-events: none;
+}
+
+.qf-phone-divider {
+  width: 1px;
+  height: 1.5rem;
+  background: #d4d4d4;
+  flex-shrink: 0;
+}
+
+.qf-phone-input-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.qf-phone-icon {
+  position: absolute;
+  left: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 0.875rem;
+  width: 0.875rem;
+  color: #888;
+  pointer-events: none;
+}
+
+.qf-phone-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0 0.75rem 0 2rem;
+  font-size: 0.875rem;
+  color: var(--foreground);
+  outline: none;
+  line-height: 1;
+  font-family: var(--font-sans), sans-serif;
+  height: 100%;
+}
+
+.qf-phone-input::placeholder {
+  color: #aaa;
+}
+
 /* Error state on inputs */
 .qf-input-error {
   border-color: #ef4444 !important;
@@ -1455,6 +1577,48 @@ textarea.input-field {
   padding: 0.875rem 1rem;
   margin-bottom: 1.25rem;
   animation: fadeInUp 0.3s ease;
+}
+
+/* ── Success Overlay (full form cover) ── */
+.qf-success-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: inherit;
+  animation: fadeIn 0.3s ease;
+}
+
+.qf-success-overlay-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding: 2rem;
+  max-width: 22rem;
+}
+
+.qf-success-overlay-title {
+  font-family: var(--font-serif), sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--heading);
+  line-height: 1.3;
+}
+
+.qf-success-overlay-text {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Error Banner */

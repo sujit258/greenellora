@@ -22,6 +22,27 @@ export function getFlatNavLinks(): NavLink[] {
 
 export { serviceOfferings } from "./services";
 
+// Function to fetch active services from API
+export async function getActiveServices(): Promise<NavLink[]> {
+  try {
+    const res = await fetch("/api/service-types", { cache: "no-store" });
+    const data = await res.json();
+    if (data.success && data.data) {
+      return data.data.map((service: any) => ({
+        label: service.navLabel,
+        href: `/services/${service.slug}`, // Link to individual service page
+      }));
+    }
+  } catch (error) {
+    console.error("Failed to fetch services:", error);
+  }
+  // Fallback to static services if API fails
+  return servicePages.map((page) => ({
+    label: page.navLabel,
+    href: page.href,
+  }));
+}
+
 export const siteConfig = {
   name: "Green Ellora",
   title: "Green Ellora | Premium Organic & Agro Exports from India",

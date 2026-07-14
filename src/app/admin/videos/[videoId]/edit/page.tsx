@@ -6,7 +6,7 @@ import { ArrowLeft, Save } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useAdmin } from "@/components/admin/AdminProvider";
 import Link from "next/link";
-import "../../../admin.css";
+import "@/app/admin/admin.css";
 
 export default function EditVideoPage({ params }: { params: Promise<{ videoId: string }> }) {
   const router = useRouter();

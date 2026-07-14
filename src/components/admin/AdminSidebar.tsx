@@ -4,16 +4,15 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
-  Leaf,
-  Palette,
+  Layers,
+  Package,
   Video,
   LogOut,
 } from "lucide-react";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { href: "/admin/products/ayurvedic", label: "Ayurvedic Products", icon: Leaf },
-  { href: "/admin/products/handicraft", label: "Handicraft Products", icon: Palette },
+  { href: "/admin/service-types", label: "Service Types", icon: Layers },
   { href: "/admin/videos", label: "Videos", icon: Video },
 ];
 

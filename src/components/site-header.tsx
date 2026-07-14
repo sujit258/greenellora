@@ -6,13 +6,22 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { NavMenu } from "@/components/nav-menu";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, getActiveServices, type NavLink } from "@/lib/site";
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileServices, setMobileServices] = useState<NavLink[]>([]);
   const pathname = usePathname();
 
   useEffect(() => { setMobileMenuOpen(false); }, [pathname]);
+
+  useEffect(() => {
+    async function loadServices() {
+      const services = await getActiveServices();
+      setMobileServices(services);
+    }
+    loadServices();
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
@@ -36,11 +45,28 @@ export function SiteHeader() {
               <Phone className="h-3.5 w-3.5" />
               {siteConfig.phone}
             </a>
-            <span className="announce-link">
+            <div className="relative announce-link group">
               <Globe className="h-3.5 w-3.5" />
-              English
-              <ChevronDown className="h-3 w-3 opacity-70" />
-            </span>
+              <select
+                className="appearance-none bg-transparent cursor-pointer text-[0.75rem] font-medium outline-none pr-4"
+                defaultValue="en"
+                aria-label="Select language"
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val !== "en") {
+                    alert(`Language pack for ${val} coming soon. Currently the site is in English.`);
+                    e.target.value = "en";
+                  }
+                }}
+              >
+                <option value="en" className="text-xs">English</option>
+                <option value="es" className="text-xs">Español</option>
+                <option value="ar" className="text-xs">العربية</option>
+                <option value="fr" className="text-xs">Français</option>
+                <option value="de" className="text-xs">Deutsch</option>
+                <option value="zh" className="text-xs">中文</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -83,19 +109,13 @@ export function SiteHeader() {
                 Home
                 <ChevronRight className="h-4 w-4 text-subtle" />
               </Link>
-              <p className="pt-4 text-xs font-bold uppercase tracking-widest text-subtle">Products</p>
-              <Link href="/services/ayurvedic-products" className="flex items-center justify-between border-b border-border/50 py-3 pl-2 text-sm font-medium text-body hover:text-primary">
-                Ayurvedic Products
-                <ChevronRight className="h-4 w-4 text-subtle" />
-              </Link>
-              <Link href="/services/handicraft-products" className="flex items-center justify-between border-b border-border/50 py-3 pl-2 text-sm font-medium text-body hover:text-primary">
-                Handicraft Products
-                <ChevronRight className="h-4 w-4 text-subtle" />
-              </Link>
-              <Link href="/services/export-services" className="flex items-center justify-between border-b border-border/50 py-3 pl-2 text-sm font-medium text-body hover:text-primary">
-                Export Services
-                <ChevronRight className="h-4 w-4 text-subtle" />
-              </Link>
+              <p className="pt-4 text-xs font-bold uppercase tracking-widest text-subtle">Services</p>
+              {mobileServices.map((service) => (
+                <Link key={service.href} href={service.href} className="flex items-center justify-between border-b border-border/50 py-3 pl-2 text-sm font-medium text-body hover:text-primary">
+                  {service.label}
+                  <ChevronRight className="h-4 w-4 text-subtle" />
+                </Link>
+              ))}
               <Link href="/videos" className="flex items-center justify-between border-b border-border py-4 text-base font-semibold text-heading">
                 Videos
                 <ChevronRight className="h-4 w-4 text-subtle" />

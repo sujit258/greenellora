@@ -3,12 +3,19 @@ import connectDB from "@/lib/db";
 import AyurvedicProduct from "@/models/AyurvedicProduct";
 import { requireAuth } from "@/lib/auth";
 
-// GET all ayurvedic products (public)
+// GET all ayurvedic products (public, cached)
 export async function GET() {
   try {
     await connectDB();
     const products = await AyurvedicProduct.find({}).sort({ createdAt: -1 });
-    return NextResponse.json({ success: true, data: products });
+    return NextResponse.json(
+      { success: true, data: products },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Failed to fetch ayurvedic products" },

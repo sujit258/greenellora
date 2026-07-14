@@ -1,22 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Leaf, Palette, Video, TrendingUp, Package, Users } from "lucide-react";
+import { Layers, Package, Video, TrendingUp, PlusCircle, Users } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useAdmin } from "@/components/admin/AdminProvider";
 import "./admin.css";
 
 interface Stats {
-  handicraftProducts: number;
-  ayurvedicProducts: number;
+  serviceTypes: number;
+  totalProducts: number;
   videos: number;
 }
 
 export default function AdminDashboard() {
   const { showToast } = useAdmin();
   const [stats, setStats] = useState<Stats>({
-    handicraftProducts: 0,
-    ayurvedicProducts: 0,
+    serviceTypes: 0,
+    totalProducts: 0,
     videos: 0,
   });
   const [loading, setLoading] = useState(true);
@@ -24,19 +24,19 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const [handicraftRes, ayurvedicRes, videosRes] = await Promise.all([
-          fetch("/api/handicraft-products"),
-          fetch("/api/ayurvedic-products"),
+        const [typesRes, productsRes, videosRes] = await Promise.all([
+          fetch("/api/service-types"),
+          fetch("/api/service-products"),
           fetch("/api/videos"),
         ]);
 
-        const handicraftData = await handicraftRes.json();
-        const ayurvedicData = await ayurvedicRes.json();
+        const typesData = await typesRes.json();
+        const productsData = await productsRes.json();
         const videosData = await videosRes.json();
 
         setStats({
-          handicraftProducts: handicraftData.success ? handicraftData.data.length : 0,
-          ayurvedicProducts: ayurvedicData.success ? ayurvedicData.data.length : 0,
+          serviceTypes: typesData.success ? typesData.data.length : 0,
+          totalProducts: productsData.success ? productsData.data.length : 0,
           videos: videosData.success ? videosData.data.length : 0,
         });
       } catch (error) {
@@ -51,18 +51,18 @@ export default function AdminDashboard() {
 
   const statCards = [
     {
-      title: "Handicraft Products",
-      value: stats.handicraftProducts,
-      icon: Palette,
+      title: "Service Types",
+      value: stats.serviceTypes,
+      icon: Layers,
       color: "bg-purple-50 text-purple-600",
-      href: "/admin/products/handicraft",
+      href: "/admin/service-types",
     },
     {
-      title: "Ayurvedic Products",
-      value: stats.ayurvedicProducts,
-      icon: Leaf,
+      title: "Total Products",
+      value: stats.totalProducts,
+      icon: Package,
       color: "bg-green-50 text-green-600",
-      href: "/admin/products/ayurvedic",
+      href: "/admin/service-types",
     },
     {
       title: "Videos",
@@ -118,26 +118,14 @@ export default function AdminDashboard() {
             </div>
             <div className="space-y-3">
               <a
-                href="/admin/products/handicraft/new"
+                href="/admin/service-types"
                 className="block p-4 rounded-lg border border-slate-200 hover:border-primary/30 hover:bg-slate-50 transition"
               >
                 <div className="flex items-center gap-3">
-                  <Package className="h-5 w-5 text-slate-600" />
+                  <Layers className="h-5 w-5 text-slate-600" />
                   <div>
-                    <p className="font-medium text-slate-900">Add New Handicraft Product</p>
-                    <p className="text-sm text-slate-600">Create a new handicraft product listing</p>
-                  </div>
-                </div>
-              </a>
-              <a
-                href="/admin/products/ayurvedic/new"
-                className="block p-4 rounded-lg border border-slate-200 hover:border-primary/30 hover:bg-slate-50 transition"
-              >
-                <div className="flex items-center gap-3">
-                  <Leaf className="h-5 w-5 text-slate-600" />
-                  <div>
-                    <p className="font-medium text-slate-900">Add New Ayurvedic Product</p>
-                    <p className="text-sm text-slate-600">Create a new ayurvedic product listing</p>
+                    <p className="font-medium text-slate-900">Manage Service Types</p>
+                    <p className="text-sm text-slate-600">Create and manage service types & their products</p>
                   </div>
                 </div>
               </a>

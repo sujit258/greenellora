@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-import { isNavDropdown, siteConfig, type NavDropdown, type NavLink } from "@/lib/site";
+import { isNavDropdown, siteConfig, getActiveServices, type NavDropdown, type NavLink } from "@/lib/site";
 
 const navItemClassName =
   "nav-link inline-flex h-10 items-center text-sm font-medium transition-all duration-300";
@@ -19,8 +19,19 @@ function NavAnchor({ href, label }: NavLink) {
 
 function NavDropdownMenu({ item }: { item: NavDropdown }) {
   const [open, setOpen] = useState(false);
+  const [services, setServices] = useState<NavLink[]>(item.children);
   const ref = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    async function loadServices() {
+      if (item.label === "Services") {
+        const activeServices = await getActiveServices();
+        setServices(activeServices);
+      }
+    }
+    loadServices();
+  }, [item.label]);
 
   const clearCloseTimeout = () => {
     if (closeTimeoutRef.current !== null) {
@@ -84,7 +95,7 @@ function NavDropdownMenu({ item }: { item: NavDropdown }) {
       {open && (
         <div className="absolute left-1/2 top-full z-50 min-w-56 -translate-x-1/2 pt-2.5 animate-[fadeInUp_0.2s_ease]">
           <div className="nav-dropdown rounded-xl border border-border/80 bg-surface/95 p-1.5 shadow-xl backdrop-blur-md">
-            {item.children.map((child) => (
+            {services.map((child) => (
               <Link
                 key={child.href}
                 href={child.href}
