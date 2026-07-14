@@ -21,11 +21,19 @@ export async function submitQuoteForm(
   const enquiryType = (formData.get("enquiryType") as string)?.trim();
   const message = (formData.get("message") as string)?.trim();
 
-  if (!name || !email || !message) {
-    return { status: "error", message: "Please fill in all required fields (Name, Email, Message)." };
+  if (!name || !email || !phone || !message) {
+    return { status: "error", message: "Please fill in all required fields (Name, Email, Phone, Message)." };
   }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  // Strict email validation matching client-side
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
+  if (!emailRegex.test(email)) {
+    return { status: "error", message: "Please enter a valid email address." };
+  }
+  // Check for suspicious repeated chars in TLD (e.g., "commm")
+  const tld = email.split(".").pop() || "";
+  const repeatedChar = /(.)\1{2,}/;
+  if (repeatedChar.test(tld)) {
     return { status: "error", message: "Please enter a valid email address." };
   }
 

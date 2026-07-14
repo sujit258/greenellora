@@ -3,12 +3,19 @@ import connectDB from "@/lib/db";
 import HandicraftProduct from "@/models/HandicraftProduct";
 import { requireAuth } from "@/lib/auth";
 
-// GET all handicraft products (public)
+// GET all handicraft products (public, cached)
 export async function GET() {
   try {
     await connectDB();
     const products = await HandicraftProduct.find({}).sort({ createdAt: -1 });
-    return NextResponse.json({ success: true, data: products });
+    return NextResponse.json(
+      { success: true, data: products },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Failed to fetch handicraft products" },

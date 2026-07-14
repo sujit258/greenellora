@@ -4,12 +4,19 @@ import Video from "@/models/Video";
 import { requireAuth } from "@/lib/auth";
 import { normalizeVideo, normalizeVideos } from "@/lib/video-utils";
 
-// GET all videos (public)
+// GET all videos (public, cached)
 export async function GET() {
   try {
     await connectDB();
     const videos = await Video.find({}).sort({ createdAt: -1 }).lean();
-    return NextResponse.json({ success: true, data: normalizeVideos(videos as Record<string, unknown>[]) });
+    return NextResponse.json(
+      { success: true, data: normalizeVideos(videos as Record<string, unknown>[]) },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Failed to fetch videos" },
