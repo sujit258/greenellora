@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Trash2, Edit3, Loader2, Package, ExternalLink } from "lucide-react";
+import { Plus, Trash2, Edit3, Loader2, Package, ExternalLink, ToggleLeft, ToggleRight } from "lucide-react";
 import Link from "next/link";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useAdmin } from "@/components/admin/AdminProvider";
@@ -30,6 +30,7 @@ export default function AdminServiceTypesPage() {
   const [summary, setSummary] = useState("");
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   useEffect(() => { fetchTypes(); }, []);
 
@@ -91,6 +92,30 @@ export default function AdminServiceTypesPage() {
       showToast("error", "Network error");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleToggleStatus(t: ServiceType) {
+    setTogglingId(t._id);
+    try {
+      const res = await fetch(`/api/service-types/${t._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isActive: !t.isActive }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast("success", `Service type ${t.isActive ? "deactivated" : "activated"}`);
+        setTypes((prev) =>
+          prev.map((st) => (st._id === t._id ? { ...st, isActive: !st.isActive } : st))
+        );
+      } else {
+        showToast("error", data.error || "Failed to update status");
+      }
+    } catch {
+      showToast("error", "An error occurred");
+    } finally {
+      setTogglingId(null);
     }
   }
 
@@ -184,6 +209,18 @@ export default function AdminServiceTypesPage() {
                     className="admin-btn-ghost admin-btn-icon" title="Manage products">
                     <ExternalLink className="h-4 w-4" />
                   </Link>
+                  <button onClick={() => handleToggleStatus(t)}
+                    className="admin-btn-ghost admin-btn-icon"
+                    title={t.isActive ? "Deactivate" : "Activate"}
+                    disabled={togglingId === t._id}>
+                    {togglingId === t._id ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : t.isActive ? (
+                      <ToggleRight className="h-4 w-4 text-green-600" />
+                    ) : (
+                      <ToggleLeft className="h-4 w-4 text-slate-400" />
+                    )}
+                  </button>
                   <button onClick={() => startEdit(t)}
                     className="admin-btn-ghost admin-btn-icon">
                     <Edit3 className="h-4 w-4" />

@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { ProductCard } from "@/components/product-card";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import CatalogueSection from "@/components/CatalogueSection";
 import { getHandicraftProducts } from "@/lib/handicrafts";
 import { siteConfig } from "@/lib/site";
 
@@ -65,6 +66,9 @@ export default async function HandicraftProductsPage() {
             )}
           </div>
         </section>
+
+        {/* Product Catalogues Section */}
+        <CatalogueSection category="Handicraft" />
 
         {/* CTA Section */}
         <section className="pb-24">

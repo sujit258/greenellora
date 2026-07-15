@@ -76,7 +76,7 @@ export function SiteHeader() {
         <div className="page-shell main-header-inner">
           <Link href="/" className="brand-mark">
             <img
-              src="/Gemini_Generated_Image_pgewjjpgewjjpgew.png"
+              src="/logo.png"
               alt="Green Ellora logo"
               className="h-16 w-auto"
             />

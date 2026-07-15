@@ -2272,6 +2272,15 @@ textarea.input-field {
   color: rgba(255,255,255,0.9);
 }
 
+.footer-links-col:last-child {
+  align-items: center;
+  text-align: center;
+}
+
+.footer-links-col:last-child .footer-contact-item {
+  justify-content: center;
+}
+
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.1);
 }

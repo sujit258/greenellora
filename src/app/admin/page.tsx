@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Layers, Package, Video, TrendingUp, PlusCircle, Users } from "lucide-react";
+import { Layers, Package, Video, ImageUp, TrendingUp, PlusCircle, Users } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useAdmin } from "@/components/admin/AdminProvider";
 import "./admin.css";
@@ -10,6 +10,7 @@ interface Stats {
   serviceTypes: number;
   totalProducts: number;
   videos: number;
+  banners: number;
 }
 
 export default function AdminDashboard() {
@@ -18,26 +19,30 @@ export default function AdminDashboard() {
     serviceTypes: 0,
     totalProducts: 0,
     videos: 0,
+    banners: 0,
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        const [typesRes, productsRes, videosRes] = await Promise.all([
+        const [typesRes, productsRes, videosRes, bannersRes] = await Promise.all([
           fetch("/api/service-types"),
           fetch("/api/service-products"),
           fetch("/api/videos"),
+          fetch("/api/banners?all=true"),
         ]);
 
         const typesData = await typesRes.json();
         const productsData = await productsRes.json();
         const videosData = await videosRes.json();
+        const bannersData = await bannersRes.json();
 
         setStats({
           serviceTypes: typesData.success ? typesData.data.length : 0,
           totalProducts: productsData.success ? productsData.data.length : 0,
           videos: videosData.success ? videosData.data.length : 0,
+          banners: bannersData.success ? bannersData.data.length : 0,
         });
       } catch (error) {
         showToast("error", "Failed to load dashboard statistics");
@@ -63,6 +68,13 @@ export default function AdminDashboard() {
       icon: Package,
       color: "bg-green-50 text-green-600",
       href: "/admin/service-types",
+    },
+    {
+      title: "Banners",
+      value: stats.banners,
+      icon: ImageUp,
+      color: "bg-orange-50 text-orange-600",
+      href: "/admin/banners",
     },
     {
       title: "Videos",
@@ -117,6 +129,18 @@ export default function AdminDashboard() {
               <h3 className="font-semibold text-slate-900">Quick Actions</h3>
             </div>
             <div className="space-y-3">
+              <a
+                href="/admin/banners/new"
+                className="block p-4 rounded-lg border border-slate-200 hover:border-primary/30 hover:bg-slate-50 transition"
+              >
+                <div className="flex items-center gap-3">
+                  <ImageUp className="h-5 w-5 text-slate-600" />
+                  <div>
+                    <p className="font-medium text-slate-900">Add New Banner</p>
+                    <p className="text-sm text-slate-600">Create a new homepage banner with image and text</p>
+                  </div>
+                </div>
+              </a>
               <a
                 href="/admin/service-types"
                 className="block p-4 rounded-lg border border-slate-200 hover:border-primary/30 hover:bg-slate-50 transition"

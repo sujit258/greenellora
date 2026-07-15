@@ -55,6 +55,45 @@ export async function PUT(
   }
 }
 
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    requireAuth(request);
+  } catch {
+    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    await connectDB();
+    const { id } = await params;
+    const body = await request.json();
+    const { isActive } = body;
+
+    if (typeof isActive !== "boolean") {
+      return NextResponse.json({ success: false, error: "isActive must be a boolean" }, { status: 400 });
+    }
+
+    const serviceType = await ServiceType.findByIdAndUpdate(
+      id,
+      { isActive },
+      { new: true }
+    );
+
+    if (!serviceType) {
+      return NextResponse.json({ success: false, error: "Service type not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, data: serviceType });
+  } catch (error: any) {
+    return NextResponse.json(
+      { success: false, error: error.message || "Failed to update status" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
