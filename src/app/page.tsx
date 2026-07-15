@@ -24,58 +24,21 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { normalizeVideos, type VideoItem } from "@/lib/video-utils";
 import { coreServices, siteConfig } from "@/lib/site";
-import heroBanner1 from "@/assets/hero_banner_1.png";
-import heroBanner2 from "@/assets/hero_banner_2.png";
-import heroBanner3 from "@/assets/hero_banner_3.png";
-import heroBanner4 from "@/assets/hero_banner_4.png";
-import heroBanner5 from "@/assets/hero_banner_5.png";
 import mixAdrak from "@/assets/mix_adrak.png";
 import packaging from "@/assets/packaging.png";
 import warehouse from "@/assets/warehouse.png";
 
-/* ─── Data ─── */
-const bannerSlides = [
-  {
-    src: heroBanner1,
-    alt: "Premium Indian spices and herbs",
-    title: "Premium Indian Herbs &",
-    titleAccent: "Agricultural Exports",
-    titleEnd: "Worldwide",
-    copy: "From authentic sourcing to global delivery, we ensure quality, purity, and trust in every shipment.",
-  },
-  {
-    src: heroBanner2,
-    alt: "Organic honey exports",
-    title: "Certified Organic",
-    titleAccent: "Natural Products",
-    titleEnd: "From India",
-    copy: "Premium quality organic spices, superfoods, and agro products — delivered with trust from India.",
-  },
-  {
-    src: heroBanner3,
-    alt: "Organic tea leaves",
-    title: "Your Trusted",
-    titleAccent: "Global Trade",
-    titleEnd: "Partner",
-    copy: "Reliable supply, full documentation, and dedicated export support for importers across 50+ countries.",
-  },
-  {
-    src: heroBanner4,
-    alt: "Premium quality products",
-    title: "Quality Assured",
-    titleAccent: "Export Excellence",
-    titleEnd: "From India",
-    copy: "Certified organic products with international standards and reliable worldwide logistics.",
-  },
-  {
-    src: heroBanner5,
-    alt: "Global delivery network",
-    title: "Global Delivery",
-    titleAccent: "Network",
-    titleEnd: "Worldwide",
-    copy: "Shipping to 20+ countries with full documentation and dedicated support throughout the export process.",
-  },
-];
+interface BannerSlide {
+  _id: string;
+  image: string;
+  alt: string;
+  title: string;
+  titleAccent: string;
+  titleEnd: string;
+  copy: string;
+  order: number;
+  active: boolean;
+}
 
 const trustStrip = [
   { icon: Shield, label: "Trusted by 250+ Buyers", sub: "Worldwide" },
@@ -131,29 +94,33 @@ export default function Home() {
   const [handicraftProducts, setHandicraftProducts] = useState<any[]>([]);
   const [ayurvedicProducts, setAyurvedicProducts] = useState<any[]>([]);
   const [videos, setVideos] = useState<VideoItem[]>([]);
+  const [bannerSlides, setBannerSlides] = useState<BannerSlide[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const handleNext = () => setActiveSlide((p) => (p + 1) % bannerSlides.length);
+  const handleNext = () => setActiveSlide((p) => (p + 1) % Math.max(bannerSlides.length, 1));
 
   useEffect(() => {
     const t = setInterval(handleNext, 6000);
     return () => clearInterval(t);
-  }, [activeSlide]);
+  }, [activeSlide, bannerSlides.length]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [h, a, v] = await Promise.all([
+        const [h, a, v, b] = await Promise.all([
           fetch("/api/handicraft-products"),
           fetch("/api/ayurvedic-products"),
           fetch("/api/videos"),
+          fetch("/api/banners"),
         ]);
         const hd = await h.json();
         const ad = await a.json();
         const vd = await v.json();
+        const bd = await b.json();
         if (hd.success) setHandicraftProducts(hd.data);
         if (ad.success) setAyurvedicProducts(ad.data);
         if (vd.success) setVideos(normalizeVideos(vd.data));
+        if (bd.success) setBannerSlides(bd.data);
       } catch (e) {
         console.error(e);
       } finally {
@@ -168,7 +135,7 @@ export default function Home() {
     setTouchEnd(e.changedTouches[0].clientX);
     const d = touchStart - e.changedTouches[0].clientX;
     if (d > 50) handleNext();
-    if (d < -50) setActiveSlide((p) => (p - 1 + bannerSlides.length) % bannerSlides.length);
+    if (d < -50) setActiveSlide((p) => (p - 1 + Math.max(bannerSlides.length, 1)) % Math.max(bannerSlides.length, 1));
     setTouchStart(0); setTouchEnd(0);
   };
 
@@ -178,16 +145,17 @@ export default function Home() {
       <main>
 
         {/* ── HERO ── */}
+        {bannerSlides.length > 0 && (
         <section className="hero-slider">
           <div ref={bannerRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} className="h-full w-full relative">
             {bannerSlides.map((slide, i) => (
               <div
-                key={slide.alt}
+                key={slide._id}
                 className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
                   activeSlide === i ? "opacity-100 scale-100" : "pointer-events-none opacity-0 scale-105"
                 }`}
               >
-                <Image src={slide.src} alt={slide.alt} fill className="object-cover" priority={i === 0} />
+                <Image src={slide.image} alt={slide.alt} fill className="object-cover" priority={i === 0} />
                 <div className="hero-slide-overlay" />
               </div>
             ))}
@@ -195,12 +163,12 @@ export default function Home() {
             <div className="page-shell hero-content hero-content-left">
               <div className="hero-text-block">
                 <h1 className="hero-title-new">
-                  {bannerSlides[activeSlide].title}{" "}
-                  <span className="hero-title-accent">{bannerSlides[activeSlide].titleAccent}</span>
+                  {bannerSlides[activeSlide]?.title}{" "}
+                  <span className="hero-title-accent">{bannerSlides[activeSlide]?.titleAccent}</span>
                   <br />
-                  {bannerSlides[activeSlide].titleEnd}
+                  {bannerSlides[activeSlide]?.titleEnd}
                 </h1>
-                <p className="hero-copy">{bannerSlides[activeSlide].copy}</p>
+                <p className="hero-copy">{bannerSlides[activeSlide]?.copy}</p>
                 <div className="hero-actions">
                   <Link href="#contact" className="hero-btn-primary">
                     Get a Quote <ArrowRight className="h-4 w-4" />
@@ -215,7 +183,7 @@ export default function Home() {
             <div className="hero-dots">
               {bannerSlides.map((slide, i) => (
                 <button
-                  key={slide.alt}
+                  key={slide._id}
                   type="button"
                   onClick={() => setActiveSlide(i)}
                   className={`h-2.5 rounded-full transition-all duration-500 border-none cursor-pointer ${
@@ -227,6 +195,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        )}
 
         {/* ── TRUST STRIP ── */}
         <section className="trust-strip-section">
@@ -280,7 +249,6 @@ export default function Home() {
                 { ...coreServices[2], img: warehouse,  alt: "Warehouse & Logistics",              icon: <Globe   className="h-5 w-5 text-white" /> },
               ].map((service) => (
                 <article key={service.title} className="service-card">
-                  {/* ── image with overlay + icon badge ── */}
                   <div className="service-card-img">
                     <Image
                       src={service.img}
@@ -386,7 +354,6 @@ export default function Home() {
         <section className="cta-banner-section">
           <div className="page-shell">
             <div className="cta-banner-inner">
-              {/* Leaf SVG decoration */}
               <div className="cta-leaf-decor" aria-hidden="true">
                 <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                   <path d="M40 200 C40 200 20 140 60 100 C100 60 150 50 170 20" stroke="#4a7c23" strokeWidth="3" strokeLinecap="round"/>
@@ -402,7 +369,7 @@ export default function Home() {
               </div>
               <div className="cta-banner-content">
                 <h2 className="cta-banner-title">Looking for a Reliable Export Partner?</h2>
-                <p className="cta-banner-sub">Let&apos;s build a long-term business relationship.</p>
+                <p className="cta-banner-sub">Let's build a long-term business relationship.</p>
               </div>
               <Link href="#contact" className="cta-banner-btn">
                 Send Your Inquiry <ArrowRight className="h-4 w-4" />
@@ -417,14 +384,13 @@ export default function Home() {
           <div className="contact-blob contact-blob-2" aria-hidden="true" />
           <div className="page-shell contact-shell">
             <div className="contact-grid">
-              {/* Left Panel */}
               <div className="contact-left">
                 <div className="contact-brand">
                   <span className="brand-logo text-sm">GE</span>
                   <span className="font-serif text-base font-semibold text-heading">Green Ellora</span>
                 </div>
                 <div className="contact-heading-block">
-                  <h2 className="contact-heading">Let&apos;s Grow<br />Together</h2>
+                  <h2 className="contact-heading">Let's Grow<br />Together</h2>
                   <p className="contact-subtext">
                     Share your requirements and our export team will get back to you within one business day.
                   </p>
@@ -434,7 +400,7 @@ export default function Home() {
                     <div className="contact-feature-icon"><Shield className="h-5 w-5 text-primary" /></div>
                     <div>
                       <h3 className="contact-feature-title">Quality Assured</h3>
-                      <p className="contact-feature-text">Premium quality herbs, spices &amp; natural products.</p>
+                      <p className="contact-feature-text">Premium quality herbs, spices & natural products.</p>
                     </div>
                   </div>
                   <div className="contact-feature">
@@ -466,7 +432,6 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              {/* Right Panel */}
               <div className="contact-form-card">
                 <QuoteForm />
               </div>

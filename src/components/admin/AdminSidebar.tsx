@@ -7,11 +7,15 @@ import {
   Layers,
   Package,
   Video,
+  ImageUp,
+  FileText,
   LogOut,
 } from "lucide-react";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/admin/banners", label: "Banners", icon: ImageUp },
+  { href: "/admin/catalogues", label: "Catalogues", icon: FileText },
   { href: "/admin/service-types", label: "Service Types", icon: Layers },
   { href: "/admin/videos", label: "Videos", icon: Video },
 ];

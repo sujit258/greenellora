@@ -21,8 +21,8 @@ export default function ImageUpload({ currentImage, onImageChange, label }: Imag
         setError("Please upload an image file.");
         return;
       }
-      if (file.size > 5 * 1024 * 1024) {
-        setError("Image must be smaller than 5MB.");
+      if (file.size > 10 * 1024 * 1024) {
+        setError("Image must be smaller than 10MB.");
         return;
       }
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     // Validate the file size before sending it to Cloudinary.
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { success: false, error: "File size exceeds maximum of 5MB" },
+        { success: false, error: "File size exceeds maximum of 10MB" },
         { status: 400 }
       );
     }

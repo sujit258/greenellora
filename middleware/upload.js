@@ -10,13 +10,15 @@ const storage = new CloudinaryStorage({
     resource_type: "image",
     allowed_formats: ["jpg", "jpeg", "png", "webp", "gif", "svg"],
     public_id: `${Date.now()}-${file.originalname.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9-_]+/g, "-")}`,
+    format: "webp",       // Convert every uploaded image to WebP
+    quality: "auto",      // Auto-select the best quality-to-size ratio
   }),
 });
 
 const upload = multer({
   storage,
   limits: {
-    fileSize: 5 * 1024 * 1024,
+    fileSize: 10 * 1024 * 1024,
   },
   fileFilter: (_req, file, cb) => {
     if (file.mimetype.startsWith("image/")) {
@@ -37,6 +39,8 @@ export async function uploadImageToCloudinary(file) {
     folder: CLOUDINARY_FOLDER,
     resource_type: "image",
     public_id: `${Date.now()}-${safeName}`,
+    format: "webp",       // Convert to WebP on upload for smaller, optimised files
+    quality: "auto",      // Let Cloudinary choose the best quality-to-size ratio
   });
 
   return result.secure_url;

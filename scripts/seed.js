@@ -53,6 +53,17 @@ const videoSchema = new mongoose.Schema({
   thumbnail: { type: String, required: true },
 }, { timestamps: true });
 
+const bannerSchema = new mongoose.Schema({
+  image: { type: String, required: true },
+  alt: { type: String, required: true },
+  title: { type: String, required: true },
+  titleAccent: { type: String, required: true },
+  titleEnd: { type: String, required: true },
+  copy: { type: String, required: true },
+  order: { type: Number, default: 0 },
+  active: { type: Boolean, default: true },
+}, { timestamps: true });
+
 const adminSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true, lowercase: true, trim: true },
   hashedPassword: { type: String, required: true },
@@ -62,6 +73,7 @@ const HandicraftProduct = mongoose.model('HandicraftProduct', handicraftProductS
 const AyurvedicProduct = mongoose.model('AyurvedicProduct', ayurvedicProductSchema);
 const Video = mongoose.model('Video', videoSchema);
 const Admin = mongoose.model('Admin', adminSchema);
+const Banner = mongoose.model('Banner', bannerSchema);
 
 // Data from lib files
 const handicraftProducts = [
@@ -262,6 +274,59 @@ const ayurvedicProducts = [
   },
 ];
 
+const banners = [
+  {
+    image: "/Gemini_Generated_Image_pgewjjpgewjjpgew.png",
+    alt: "Premium Indian spices and herbs",
+    title: "Premium Indian Herbs &",
+    titleAccent: "Agricultural Exports",
+    titleEnd: "Worldwide",
+    copy: "From authentic sourcing to global delivery, we ensure quality, purity, and trust in every shipment.",
+    order: 0,
+    active: true,
+  },
+  {
+    image: "/Gemini_Generated_Image_pgewjjpgewjjpgew.png",
+    alt: "Organic honey exports",
+    title: "Certified Organic",
+    titleAccent: "Natural Products",
+    titleEnd: "From India",
+    copy: "Premium quality organic spices, superfoods, and agro products — delivered with trust from India.",
+    order: 1,
+    active: true,
+  },
+  {
+    image: "/Gemini_Generated_Image_pgewjjpgewjjpgew.png",
+    alt: "Organic tea leaves",
+    title: "Your Trusted",
+    titleAccent: "Global Trade",
+    titleEnd: "Partner",
+    copy: "Reliable supply, full documentation, and dedicated export support for importers across 50+ countries.",
+    order: 2,
+    active: true,
+  },
+  {
+    image: "/Gemini_Generated_Image_pgewjjpgewjjpgew.png",
+    alt: "Premium quality products",
+    title: "Quality Assured",
+    titleAccent: "Export Excellence",
+    titleEnd: "From India",
+    copy: "Certified organic products with international standards and reliable worldwide logistics.",
+    order: 3,
+    active: true,
+  },
+  {
+    image: "/Gemini_Generated_Image_pgewjjpgewjjpgew.png",
+    alt: "Global delivery network",
+    title: "Global Delivery",
+    titleAccent: "Network",
+    titleEnd: "Worldwide",
+    copy: "Shipping to 20+ countries with full documentation and dedicated support throughout the export process.",
+    order: 4,
+    active: true,
+  },
+];
+
 const videos = [
   {
     id: "organic-farming-practices",
@@ -344,6 +409,14 @@ async function seed() {
       await Video.create(video);
     }
     console.log(`Seeded ${videos.length} videos`);
+
+    // Seed banners
+    console.log("Seeding banners...");
+    await Banner.deleteMany({});
+    for (const banner of banners) {
+      await Banner.create(banner);
+    }
+    console.log(`Seeded ${banners.length} banners`);
 
     // Seed admin account
     console.log("Setting up admin account...");
